@@ -188,7 +188,7 @@
                 <img src="{{ Auth::user()->profile_photo_path ? asset('storage/' . Auth::user()->profile_photo_path) : asset('assets/images/users/profile-default.png') }}"
                     alt="user-image" class="rounded-circle">
                 <span class="pro-user-name ms-1">
-                    {{ Auth::user()->name }}<i class="mdi mdi-chevron-down"></i>
+                    {{ Auth::user()->fullname }}<i class="mdi mdi-chevron-down"></i>
                 </span>
             </a>
             <div class="dropdown-menu dropdown-menu-end profile-dropdown ">

@@ -7,12 +7,9 @@
 
             <img src="{{ Auth::user()->profile_photo_path ? asset('storage/' . Auth::user()->profile_photo_path) : asset('assets/images/users/profile-default.png') }}"
                 alt="user-img" title="Mat Helme" class="rounded-circle img-thumbnail avatar-md">
-            {{-- <img src="{{ $user->profile_photo_path ? asset('storage/' . $user->profile_photo_path) : asset('assets/images/users/profile-default.png') }}"
-                            class="rounded-circle avatar-xl img-thumbnail mb-2" alt="profile-image"
-                            style="width: 150px; height: 150px;"> --}}
             <div class="dropdown">
                 <a href="#" class="user-name dropdown-toggle h5 mt-2 mb-1 d-block" data-bs-toggle="dropdown"
-                    aria-expanded="false">{{ Auth::user()->name }}</a>
+                    aria-expanded="false">{{ Auth::user()->fullname }}</a>
                 <div class="dropdown-menu user-pro-dropdown">
 
                     <!-- item-->
