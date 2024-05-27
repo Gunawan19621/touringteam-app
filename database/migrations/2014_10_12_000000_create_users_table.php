@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('m_users', function (Blueprint $table) {
             $table->id();
             $table->string('username')->unique();
             $table->string('fullname');
@@ -19,15 +19,15 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('nophone')->unique();
             $table->string('password');
-            $table->enum('gender', ['male', 'female'])->nullable();
+            $table->enum('gender', ['male', 'female', 'others'])->nullable();
             $table->string('address')->nullable();
-            $table->integer('point')->default(0);
+            $table->bigInteger('point')->default(0);
             $table->string('avatar')->nullable();
             $table->string('referral_code')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
-            $table->foreignId('current_team_id')->nullable();
+            // $table->foreignId('current_team_id')->nullable();
             $table->string('profile_photo_path', 2048)->nullable();
         });
     }
@@ -37,6 +37,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('m_users');
     }
 };
