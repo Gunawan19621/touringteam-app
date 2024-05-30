@@ -85,15 +85,27 @@
                         @csrf
 
                         <div class="mb-2">
-                            <label for="name" class="form-label">Full Name</label>
-                            <input class="form-control" type="text" name="name" id="name"
-                                placeholder="Enter your name" required autofocus autocomplete="name">
+                            <label for="username" class="form-label">Username</label>
+                            <input class="form-control" type="text" name="username" id="username"
+                                placeholder="Enter your username" required autofocus autocomplete="username">
                         </div>
                         <div class="mb-2">
-                            <label for="email" class="form-label">Email address</label>
+                            <label for="fullname" class="form-label">Nama Lengkap</label>
+                            <input class="form-control" type="text" name="fullname" id="fullname"
+                                value="{{ old('fullname') }}" placeholder="Enter your fullname" required autofocus
+                                autocomplete="fullname">
+                        </div>
+                        <div class="mb-2">
+                            <label for="email" class="form-label">Email</label>
                             <input class="form-control" type="email" name="email" value="{{ old('email') }}"
-                                id="email" value="{{ old('name') }}" placeholder="Enter your email" required
+                                id="email" value="{{ old('email') }}" placeholder="Enter your email" required
                                 autocomplete="username">
+                        </div>
+                        <div class="mb-2">
+                            <label for="nophone" class="form-label">No. Telepon</label>
+                            <input class="form-control" type="text" name="nophone" value="{{ old('nophone') }}"
+                                id="nophone" value="{{ old('nophone') }}" placeholder="Enter your phone number" required
+                                autocomplete="nophone">
                         </div>
                         <div class="mb-2">
                             <label for="password" class="form-label">Password</label>

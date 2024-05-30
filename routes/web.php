@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ReminderDocument;
 use App\Http\Controllers\ProfileController;
 
 /*
@@ -36,6 +37,7 @@ Route::middleware([
 });
 
 Route::prefix('dashboard')->name('dashboard.')->middleware(['auth'])->group(function () {
+    //halaman profile
     Route::controller(ProfileController::class)->group(function () {
         // Route::get('profile', 'index')->name('profile.index');
         // Route::get('profile/create', 'create')->name('profile.create');
@@ -47,5 +49,54 @@ Route::prefix('dashboard')->name('dashboard.')->middleware(['auth'])->group(func
         Route::post('profile/{id}/upload-photo', 'uploadPhoto')->name('profile.uploadPhoto');
         Route::delete('profile/{id}/delete-photo', 'deletePhoto')->name('profile.deletePhoto');
         Route::put('profile/{id}/update-password', 'updatePassword')->name('profile.updatePassword');
+    });
+
+    //halaman Komunitas
+    Route::get('/community', function () {
+        return view('pages.admin.community.indexdua');
+    });
+    Route::get('/community/create', function () {
+        return view('pages.admin.community.create');
+    });
+
+    //halaman Touring
+    Route::get('/touring', function () {
+        return view('pages.admin.touring.index');
+    });
+    Route::get('/touring/create', function () {
+        return view('pages.admin.touring.create');
+    });
+    Route::get('/touring/history', function () {
+        return view('pages.admin.touring.history');
+    });
+
+    //halaman detail touring aktif
+    Route::get('/touring/detail', function () {
+        return view('pages.admin.touring.detail-touring-aktif.index');
+    });
+
+    //halaman reminder document
+    Route::controller(ReminderDocument::class)->group(function () {
+        Route::get('reminder-document', 'index')->name('reminder-document.index');
+        Route::get('reminder-document/create', 'create')->name('reminder-document.create');
+        // Route::post('reminder-document/store', 'store')->name('reminder-document.store');
+        // Route::get('reminder-document/{id}', 'show')->name('reminder-document.show');
+        Route::get('reminder-document/{id}/edit', 'edit')->name('reminder-document.edit');
+        // Route::put('reminder-document/{id}', 'update')->name('reminder-document.update');
+        // Route::delete('reminder-document/delete/{id}', 'destroy')->name('reminder-document.destroy');
+    });
+    Route::get('/reminder-document/edit', function () {
+        return view('pages.admin.reminder.document.edit');
+    });
+
+    //halaman reminder sparepart
+    Route::get('/reminder-sparepart', function () {
+        return view('pages.admin.reminder.sparepart.index');
+    });
+    Route::get('/reminder-sparepart/create', function () {
+        return view('pages.admin.reminder.sparepart.create');
+    });
+    Route::get('/reminder-sparepart/edit', function () {
+        return view('pages.admin.reminder.sparepart.edit');
     });
 });

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use BaconQrCode\Encoder\QrCode;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -43,7 +44,9 @@ class ProfileController extends Controller
     {
         // dd('oke');
         $user = Auth::user();
-        return view('profile.show', compact('user'));
+        // $qrCode = QrCode::size(200)->generate($user->kode);
+        $qrCode = \SimpleSoftwareIO\QrCode\Facades\QrCode::size(200)->generate($user->kode);
+        return view('profile.show', compact('user', 'qrCode'));
     }
 
     /**
@@ -64,9 +67,9 @@ class ProfileController extends Controller
             $user = User::findOrFail($id);
 
             // Update atribut user dengan data yang diterima dari request
-            $user->name = $request->name;
+            $user->fullname = $request->fullname;
             $user->email = $request->email;
-            $user->phone = $request->phone;
+            $user->nophone = $request->nophone;
             $user->gender = $request->gender;
             $user->address = $request->address;
             $user->save();

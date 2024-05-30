@@ -19,17 +19,40 @@ class User extends Authenticatable
     use TwoFactorAuthenticatable;
 
     /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'm_users';
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
+    // protected $fillable = [
+    //     'name',
+    //     'email',
+    //     'phone',
+    //     'address',
+    //     'gender',
+    //     'password',
+    // ];
     protected $fillable = [
-        'name',
+        'username',
+        'fullname',
+        'kode',
         'email',
-        'phone',
-        'address',
-        'gender',
+        'nophone',
         'password',
+        'gender',
+        'address',
+        'point',
+        'avatar',
+        'referral_code',
+        'email_verified_at',
+        'remember_token',
+        'profile_photo_path'
     ];
 
     /**
