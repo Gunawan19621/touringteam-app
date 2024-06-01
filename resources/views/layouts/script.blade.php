@@ -39,6 +39,12 @@
 <script src="{{ asset('assets/libs/pdfmake/build/vfs_fonts.js') }}"></script>
 <!-- third party js ends -->
 
+<!-- Calendar plugin js -->
+<script src="{{ asset('assets/libs/moment/min/moment.min.js') }}"></script>
+<script src="{{ asset('assets/libs/fullcalendar/main.min.js') }}"></script>
+<!-- Calendar init -->
+<script src="{{ asset('assets/js/pages/calendar.init.js') }}"></script>
+
 <!-- Datatables init -->
 <script src="{{ asset('assets/js/pages/datatables.init.js') }}"></script>
 

@@ -224,15 +224,9 @@
             </div>
         </li>
 
-        <li class="dropdown notification-list">
-            <a href="javascript:void(0);" class="nav-link right-bar-toggle waves-effect waves-light">
-                <i class="fas fa-cog noti-icon" style="font-size: 23px;"></i>
-            </a>
-        </li>
-
     </ul>
 
-    <!-- LOGO -->
+    <!-- LOGO pada saat responsive-->
     <div class="logo-box">
         <a href="index.html" class="logo logo-light text-center">
             <span class="logo-sm">
@@ -252,6 +246,7 @@
         </a>
     </div>
 
+    <!-- Bagian pengganti humburger sebelum responsive-->
     <ul class="list-unstyled topnav-menu topnav-menu-left mb-0">
         <li>
             <button class="button-menu-mobile disable-btn waves-effect">

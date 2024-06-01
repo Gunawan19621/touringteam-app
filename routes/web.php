@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ReminderDocument;
-use App\Http\Controllers\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +27,8 @@ Route::middleware([
         return view('pages.admin.index');
         // return view('dashboard');
     })->name('dashboard');
+
+    //sampe bawah di sini tidak di pakai
     Route::get('/member-group', function () {
         return view('pages.admin.member-group.index');
     })->name('member-group');
@@ -38,7 +39,7 @@ Route::middleware([
 
 Route::prefix('dashboard')->name('dashboard.')->middleware(['auth'])->group(function () {
     //halaman profile
-    Route::controller(ProfileController::class)->group(function () {
+    Route::controller(App\Http\Controllers\ProfileController::class)->group(function () {
         // Route::get('profile', 'index')->name('profile.index');
         // Route::get('profile/create', 'create')->name('profile.create');
         // Route::post('profile/store', 'store')->name('profile.store');
@@ -50,6 +51,35 @@ Route::prefix('dashboard')->name('dashboard.')->middleware(['auth'])->group(func
         Route::delete('profile/{id}/delete-photo', 'deletePhoto')->name('profile.deletePhoto');
         Route::put('profile/{id}/update-password', 'updatePassword')->name('profile.updatePassword');
     });
+
+    //halaman managemen user
+    Route::controller(App\Http\Controllers\M_UserController::class)->group(function () {
+        Route::get('user', 'index')->name('user.index');
+        Route::get('user/create', 'create')->name('user.create');
+        Route::post('user/store', 'store')->name('user.store');
+        Route::get('user/{id}', 'show')->name('user.show');
+        Route::get('user/{id}/edit', 'edit')->name('user.edit');
+        Route::put('user/{id}', 'update')->name('user.update');
+        Route::delete('user/delete/{id}', 'destroy')->name('user.destroy');
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     //halaman Komunitas
     Route::get('/community', function () {

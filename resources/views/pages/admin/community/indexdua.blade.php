@@ -7,233 +7,372 @@
     <li class="breadcrumb-item active" aria-current="page">Data Komunitas</li>
 @endsection
 
-{{-- @section('content')
-    <div class="row d-flex align-items-stretch" style="height: 100%; position: relative;">
-        <!-- Cover Photo Section -->
-        <div class="col-12" style="height: 35vh; position: relative;">
-            <img src="{{ asset('assets/images/small/flower2.jpg') }}" class="img-fluid w-100" alt="cover-photo"
-                style="height: 90%; object-fit: cover;">
-        </div>
-
-        <!-- Profile and Profile Settings Section -->
-        <div class="row" style="margin-top: -10vh; z-index: 1; width: 100%;">
-            <!-- Profile Section -->
-            <div class="col-4" style="padding-left: 35px;"> <!-- tambahkan padding di sini -->
-                <div class="card d-flex flex-column" style="height: calc(100vh - 25vh - 10px);">
-                    <div class="text-center card-body" style="max-height: calc(100vh - 25vh - 10px); overflow-y: auto;">
-                        <!-- Isi Profil -->
-                        <img src="{{ asset('assets/images/users/profile-default.png') }}"
-                            class="rounded-circle avatar-xl img-thumbnail mb-2" alt="profile-image"
-                            style="width: 150px; height: 150px;">
-
-                        <div class="text-start mt-2">
-                            <p class="text-muted font-13">
-                                <strong>Username :</strong> <span class="ms-2">Gunawan</span>
-                            </p>
-                            <p class="text-muted font-13">
-                                <strong>Username :</strong> <span class="ms-2">Gunawan</span>
-                            </p>
-                            <p class="text-muted font-13">
-                                <strong>Username :</strong> <span class="ms-2">Gunawan</span>
-                            </p>
-                        </div>
-                        <div class="d-flex justify-content-center">
-                            <form id="uploadPhotoForm" action="" method="POST" enctype="multipart/form-data"
-                                style="display:none;">
-                                @csrf
-                                <input type="file" name="profile_photo" accept="image/*" id="profilePhotoInput">
-                            </form>
-                            <button id="uploadPhotoButton"
-                                class="btn btn-primary rounded-pill waves-effect waves-light me-2">
-                                Upload Foto
-                            </button>
-
-                            <form action="" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger rounded-pill waves-effect waves-light">
-                                    Hapus Foto
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Profile Settings Section -->
-            <div class="col-8" style=""> <!-- tambahkan padding di sini -->
-                <div class="card d-flex flex-column" style="height: calc(100vh - 25vh - 10px);">
-                    <div class="card-body">
-                        <!-- Isi Pengaturan Profil -->
-                        <ul class="nav nav-tabs nav-bordered">
-                            <li class="nav-item">
-                                <a href="#profile-b1" data-bs-toggle="tab" aria-expanded="true" class="nav-link active">
-                                    Komunitas detail
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#password-b1" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
-                                    Komunitas Setting
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#member-b1" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
-                                    Member
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#invite-b1" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
-                                    Invitation
-                                </a>
-                            </li>
-                        </ul>
-                        <div class="tab-content">
-                            <div class="tab-pane show active" id="profile-b1"
-                                style="max-height: calc(100vh - 25vh - 80px); overflow-y: auto;">
-                                <p>tab 1</p>
-                            </div>
-
-                            <div class="tab-pane" id="password-b1"
-                                style="max-height: calc(100vh - 25vh - 80px); overflow-y: auto;">
-                                <p>tab 2</p>
-                            </div>
-
-                            <div class="tab-pane" id="member-b1"
-                                style="max-height: calc(100vh - 25vh - 80px); overflow-y: auto;">
-                                <p>tab 3</p>
-                            </div>
-
-                            <div class="tab-pane" id="invite-b1"
-                                style="max-height: calc(100vh - 25vh - 80px); overflow-y: auto;">
-                                <p>tab 4</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-@endsection --}}
 @section('content')
-    <style>
-        .tab-pane {
-            padding: 1rem;
-        }
+    <div class="card">
+        <div class="bg-picture card-body">
+            <div class="d-flex align-items-top">
 
-        .btn-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
+                <!-- avatar -->
+                <img src="{{ asset('assets/images/users/profile.jpg') }}"
+                    class="flex-shrink-0 rounded-circle avatar-xl img-thumbnail float-start me-3" alt="profile-image"
+                    style="width: 150px; height: 150px;">
 
-        .btn-buat-pengaduan {
-            text-align: center;
-        }
-    </style>
-    <div class="row">
-        <div class="col-12">
-            <div class="card bg-transparent shadow-none">
-                <div class="card-body bg-white">
-                    <!-- Profil Komunitas Perumahan -->
+                <!-- profile detail -->
+                <div class="flex-grow-1 overflow-hidden">
+                    <div class="dropdown float-end">
+                        <a href="#" class="dropdown-toggle arrow-none card-drop font-20" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <i class="mdi mdi-dots-vertical"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end">
+                            <!-- item-->
+                            <a href="javascript:void(0);" class="dropdown-item">Action</a>
+                            <!-- item-->
+                            <a href="javascript:void(0);" class="dropdown-item">Another action</a>
+                            <!-- item-->
+                            <a href="javascript:void(0);" class="dropdown-item">Something else</a>
+                        </div>
+                    </div>
+                    <h4 class="m-0">Nama Komunitas 1</h4>
+                    <p class="text-muted"><i>Moto Komunitas</i></p>
+                    <p class="font-13">Ini adalah Deskripsi komunitas,has been the industry's standard dummy text
+                        ever since the 1500s, when an unknown printer took a galley of type.Contrary to popular
+                        belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical
+                        Latin literature it over 2000 years to popular belief Ipsum is not simplyrandom text.
+                    </p>
+                    <!-- social  -->
+                    <ul class="social-list list-inline mt-3 mb-0">
+                        <li class="list-inline-item">
+                            <i class="mdi mdi-18px mdi-account"></i>
+                            <p class="d-inline-block">100</p>
+                            {{-- <a href="javascript: void(0);" class="social-list-item border-purple text-purple"><i
+                                    class="mdi mdi-facebook"></i></a> --}}
+                        </li>
+                        <li class="list-inline-item">
+                            <i class="mdi mdi-phone"></i>
+                            <p class="d-inline-block">085159079010</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="dropdown float-end">
+                <a href="#" class="dropdown-toggle arrow-none card-drop font-20" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    <i class="mdi mdi-dots-vertical"></i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-end">
+                    <!-- item-->
+                    <a href="javascript:void(0);" class="dropdown-item">Action</a>
+                    <!-- item-->
+                    <a href="javascript:void(0);" class="dropdown-item">Another action</a>
+                    <!-- item-->
+                    <a href="javascript:void(0);" class="dropdown-item">Something else</a>
+                </div>
+            </div>
+            <h4 class="header-title mb-4">Data Komunitas 1</h4>
+
+            <ul class="nav nav-pills navtab-bg nav-justified">
+                <li class="nav-item">
+                    <a href="#detail" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
+                        Detail Komunitas
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#anggota" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
+                        Anggota
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#kegiatan" data-bs-toggle="tab" aria-expanded="true" class="nav-link active">
+                        Kegiatan
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#pengaturan" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
+                        Pengaturan
+                    </a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <!-- Tab Detail -->
+                <div class="tab-pane" id="detail">
+                    <p>Halaman Detail Komunitas</p>
+
+                </div>
+
+                <!-- Tab Anggota-->
+                <div class="tab-pane" id="anggota">
+                    <div class="card chat-list-card mb-xl-0">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h4 class="mb-0">Data Anggota</h4>
+                                <div class="search-box chat-search-box ms-3">
+                                    <input type="text" class="form-control" placeholder="Search..."
+                                        style="width: 200px;">
+                                    <i class="mdi mdi-magnify search-icon"></i>
+                                </div>
+                            </div>
+
+                            <hr class="my-3">
+
+                            <div class="">
+                                <ul class="list-unstyled chat-list mb-0" style="max-height: 413px;" data-simplebar>
+                                    <!-- List Anggota -->
+                                    <li class="active">
+                                        <a href="#">
+                                            <div class="d-flex">
+                                                <div class="flex-shrink-0 chat-user-img active align-self-center me-2">
+                                                    <img src="assets/images/users/user-2.jpg"
+                                                        class="rounded-circle avatar-sm" alt="">
+                                                </div>
+
+                                                <div class="flex-grow-1 overflow-hidden">
+                                                    <h5 class="text-truncate font-14 mt-0 mb-1">Margaret Clayton</h5>
+                                                    <p class="text-truncate mb-0">I've finished it! See you so...</p>
+                                                </div>
+                                                <div class="font-11">05 min</div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <div class="d-flex">
+                                                <div
+                                                    class="flex-shrink-0 chat-user-img active avatar-sm align-self-center me-2">
+                                                    <span class="avatar-title rounded-circle bg-soft-success text-success">
+                                                        <i class="mdi mdi-account"></i>
+                                                    </span>
+                                                </div>
+
+                                                <div class="flex-grow-1 overflow-hidden">
+                                                    <h5 class="text-truncate font-14 mt-0 mb-1">Jason Bent</h5>
+                                                    <p class="text-truncate mb-0">Hey! there I'm available</p>
+                                                </div>
+                                                <div class="font-11">20 min</div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="unread">
+                                        <a href="#">
+                                            <div class="d-flex">
+                                                <div class="flex-shrink-0 chat-user-img align-self-center me-2">
+                                                    <img src="assets/images/users/user-3.jpg"
+                                                        class="rounded-circle avatar-sm" alt="">
+                                                </div>
+
+                                                <div class="flex-grow-1 overflow-hidden">
+                                                    <h5 class="text-truncate font-14 mt-0 mb-1">Mark Nieto</h5>
+                                                    <p class="text-truncate mb-0">This theme is awesome!</p>
+                                                </div>
+                                                <div class="font-11">32 min</div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="unread">
+                                        <a href="#">
+                                            <div class="d-flex">
+                                                <div class="flex-shrink-0 chat-user-img active align-self-center me-2">
+                                                    <img src="assets/images/users/user-4.jpg"
+                                                        class="rounded-circle avatar-sm" alt="">
+                                                </div>
+
+                                                <div class="flex-grow-1 overflow-hidden">
+                                                    <h5 class="text-truncate font-14 mt-0 mb-1">Garret Sauer</h5>
+                                                    <p class="text-truncate mb-0">Nice to meet you</p>
+                                                </div>
+                                                <div class="font-11">01 hr</div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="active">
+                                        <a href="#">
+                                            <div class="d-flex">
+                                                <div class="flex-shrink-0 chat-user-img active align-self-center me-2">
+                                                    <img src="assets/images/users/user-2.jpg"
+                                                        class="rounded-circle avatar-sm" alt="">
+                                                </div>
+
+                                                <div class="flex-grow-1 overflow-hidden">
+                                                    <h5 class="text-truncate font-14 mt-0 mb-1">Margaret Clayton</h5>
+                                                    <p class="text-truncate mb-0">I've finished it! See you so...</p>
+                                                </div>
+                                                <div class="font-11">05 min</div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <div class="d-flex">
+                                                <div
+                                                    class="flex-shrink-0 chat-user-img active avatar-sm align-self-center me-2">
+                                                    <span class="avatar-title rounded-circle bg-soft-success text-success">
+                                                        <i class="mdi mdi-account"></i>
+                                                    </span>
+                                                </div>
+
+                                                <div class="flex-grow-1 overflow-hidden">
+                                                    <h5 class="text-truncate font-14 mt-0 mb-1">Jason Bent</h5>
+                                                    <p class="text-truncate mb-0">Hey! there I'm available</p>
+                                                </div>
+                                                <div class="font-11">20 min</div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="unread">
+                                        <a href="#">
+                                            <div class="d-flex">
+                                                <div class="flex-shrink-0 chat-user-img align-self-center me-2">
+                                                    <img src="assets/images/users/user-3.jpg"
+                                                        class="rounded-circle avatar-sm" alt="">
+                                                </div>
+
+                                                <div class="flex-grow-1 overflow-hidden">
+                                                    <h5 class="text-truncate font-14 mt-0 mb-1">Mark Nieto</h5>
+                                                    <p class="text-truncate mb-0">This theme is awesome!</p>
+                                                </div>
+                                                <div class="font-11">32 min</div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="unread">
+                                        <a href="#">
+                                            <div class="d-flex">
+                                                <div class="flex-shrink-0 chat-user-img active align-self-center me-2">
+                                                    <img src="assets/images/users/user-4.jpg"
+                                                        class="rounded-circle avatar-sm" alt="">
+                                                </div>
+
+                                                <div class="flex-grow-1 overflow-hidden">
+                                                    <h5 class="text-truncate font-14 mt-0 mb-1">Garret Sauer</h5>
+                                                    <p class="text-truncate mb-0">Nice to meet you</p>
+                                                </div>
+                                                <div class="font-11">01 hr</div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab Kegiatan -->
+                <div class="tab-pane show active" id="kegiatan">
                     <div class="card">
-                        <div class="card-body bg-danger">
-                            <div class="row bg-warning">
-                                <div class="col-3 d-flex justify-content-center align-items-center">
-                                    <img src="{{ asset('assets/images/logo-sm.png') }}" alt=""
-                                        class="rounded-circle img-thumbnail thumb-xl">
-                                    <div class="online-circle"></div>
-                                </div>
-                                <div class="col-6 text-center text-white">
-                                    <h3>Komunitas 1</h3>
-                                    <p>mto 1</p>
-                                    <hr class="col-9" style="border-color:#fff">
-                                    <div class="d-flex justify-content-around">
-                                        <span>
-                                            <i class="mdi mdi-18px mdi-account"></i>
-                                            <p class="d-inline-block">100</p>
-                                        </span>
-                                        <span>
-                                            <i class="mdi mdi-home"></i>
-                                            <p class="d-inline-block">100</p>
-                                        </span>
-                                        <span>
-                                            <i class="mdi mdi-google-maps"></i>
-                                            <p class="d-inline-block">jln ciwatu</p>
-                                        </span>
-                                        <span>
-                                            <i class="mdi mdi-phone"></i>
-                                            <p class="d-inline-block">123456789012</p>
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="col-3 text-right d-flex justify-content-end align-items-end">
-                                    <button type="button" class="btn bg-secondary-light  mr-2" data-toggle="modal"
-                                        data-target="#editprofilModal"><i class="mdi mdi-lead-pencil"></i></button>
-                                    <button type="Update" class="btn bg-secondary-light" data-toggle="dropdown"
-                                        aria-haspopup="true" aria-expanded="false"><i class="mdi mdi-cog-outline"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <button class="btn btn-lg font-16 btn-success w-100" id="btn-new-event"><i
+                                            class="fa fa-plus me-1"></i> Create New</button>
 
-                    <div class="">
-                        <ul class="nav nav-tabs">
-                            <li class="nav-item">
-                                <a href="#home" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
-                                    Home
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#profile" data-bs-toggle="tab" aria-expanded="true" class="nav-link active">
-                                    Profile
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#messages" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
-                                    Messages
-                                </a>
-                            </li>
-                        </ul>
-                        <div class="tab-content">
-                            <div class="tab-pane" id="home">
-                                <p>Vakal text here dolor sit amet, consectetuer adipiscing elit. Aenean commodo
-                                    ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis
-                                    parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec,
-                                    pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.</p>
-                                <p class="mb-0">Donec pede justo, fringilla vel, aliquet nec, vulputate eget,
-                                    arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam
-                                    dictum felis eu pede mollis pretium. Integer tincidunt.Cras dapibus. Vivamus
-                                    elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula,
-                                    porttitor eu, consequat vitae, eleifend ac, enim.</p>
+                                    <div id="external-events">
+                                        <br>
+                                        <p class="text-muted">Drag and drop your event or click in the calendar</p>
+                                        <div class="external-event bg-primary" data-class="bg-primary">
+                                            <i class="mdi mdi-checkbox-blank-circle me-2 vertical-middle"></i>New Theme
+                                            Release
+                                        </div>
+                                        <div class="external-event bg-pink" data-class="bg-pink">
+                                            <i class="mdi mdi-checkbox-blank-circle me-2 vertical-middle"></i>My Event
+                                        </div>
+                                        <div class="external-event bg-warning" data-class="bg-warning">
+                                            <i class="mdi mdi-checkbox-blank-circle me-2 vertical-middle"></i>Meet manager
+                                        </div>
+                                        <div class="external-event bg-purple" data-class="bg-danger">
+                                            <i class="mdi mdi-checkbox-blank-circle me-2 vertical-middle"></i>Create New
+                                            theme
+                                        </div>
+                                    </div>
+
+                                    <!-- checkbox -->
+                                    <div class="form-check mt-3">
+                                        <input type="checkbox" class="form-check-input" id="drop-remove">
+                                        <label class="form-check-label" for="drop-remove">Remove after drop</label>
+                                    </div>
+
+                                </div> <!-- end col-->
+
+                                <div class="col-lg-9">
+                                    <div class="card">
+                                        <div class="card-body">
+
+                                            <div id="calendar"></div>
+
+                                        </div> <!-- end card body-->
+                                    </div> <!-- end card -->
+                                </div> <!-- end col -->
+
                             </div>
-                            <div class="tab-pane show active" id="profile">
-                                <p>Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim
-                                    justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu
-                                    pede mollis pretium. Integer tincidunt.Cras dapibus. Vivamus elementum semper
-                                    nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu,
-                                    consequat vitae, eleifend ac, enim.</p>
-                                <p class="mb-0">Vakal text here dolor sit amet, consectetuer adipiscing elit.
-                                    Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et
-                                    magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis,
-                                    ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis
-                                    enim.</p>
-                            </div>
-                            <div class="tab-pane" id="messages">
-                                <p>Vakal text here dolor sit amet, consectetuer adipiscing elit. Aenean commodo
-                                    ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis
-                                    parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec,
-                                    pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.</p>
-                                <p class="mb-0">Donec pede justo, fringilla vel, aliquet nec, vulputate eget,
-                                    arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam
-                                    dictum felis eu pede mollis pretium. Integer tincidunt.Cras dapibus. Vivamus
-                                    elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula,
-                                    porttitor eu, consequat vitae, eleifend ac, enim.</p>
+
+                            <!-- Add New Event MODAL -->
+                            <div class="modal fade" id="event-modal" tabindex="-1">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header py-3 px-4 border-bottom-0 d-block">
+                                            <button type="button" class="btn-close float-end" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                            <h5 class="modal-title" id="modal-title">Event</h5>
+                                        </div>
+                                        <div class="modal-body px-4 pb-4 pt-0">
+                                            <form class="needs-validation" name="event-form" id="form-event" novalidate>
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Event Name</label>
+                                                            <input class="form-control" placeholder="Insert Event Name"
+                                                                type="text" name="title" id="event-title"
+                                                                required />
+                                                            <div class="invalid-feedback">Please provide a valid event name
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Category</label>
+                                                            <select class="form-select" name="category"
+                                                                id="event-category" required>
+                                                                <option value="bg-danger" selected>Danger</option>
+                                                                <option value="bg-success">Success</option>
+                                                                <option value="bg-primary">Primary</option>
+                                                                <option value="bg-info">Info</option>
+                                                                <option value="bg-dark">Dark</option>
+                                                                <option value="bg-warning">Warning</option>
+                                                            </select>
+                                                            <div class="invalid-feedback">Please select a valid event
+                                                                category
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row mt-2">
+                                                    <div class="col-md-6 col-4">
+                                                        <button type="button" class="btn btn-danger"
+                                                            id="btn-delete-event">Delete</button>
+                                                    </div>
+                                                    <div class="col-md-6 col-8 text-end">
+                                                        <button type="button" class="btn btn-light me-1"
+                                                            data-bs-dismiss="modal">Close</button>
+                                                        <button type="submit" class="btn btn-success"
+                                                            id="btn-save-event">Save</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div> <!-- end modal-content-->
+                                </div> <!-- end modal dialog-->
                             </div>
                         </div>
                     </div>
+                </div>
+
+                <!-- Tab Pengaturan -->
+                <div class="tab-pane" id="pengaturan">
+                    <p>Halaman detail dari jadwal kegiatan</p>
                 </div>
             </div>
         </div>

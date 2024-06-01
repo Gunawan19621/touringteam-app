@@ -177,7 +177,7 @@
                     <div class="collapse" id="managemenuser">
                         <ul class="nav-second-level">
                             <li>
-                                <a href="#">User</a>
+                                <a href="{{ route('dashboard.user.index') }}">User</a>
                             </li>
                             <li>
                                 <a href="#">Role</a>

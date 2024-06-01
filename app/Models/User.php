@@ -52,7 +52,8 @@ class User extends Authenticatable
         'referral_code',
         'email_verified_at',
         'remember_token',
-        'profile_photo_path'
+        'profile_photo_path',
+        'created_at',
     ];
 
     /**
