@@ -37,6 +37,10 @@
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
                 </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Tambah Komunitas</button>
+                    <button type="button" class="btn btn-danger">Kembali</button>
+                </div>
             </form>
         </div>
     </div>

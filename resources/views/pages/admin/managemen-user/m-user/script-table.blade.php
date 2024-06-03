@@ -37,56 +37,13 @@
             });
         });
 
-        // // Edit user modal
-        // $('body').on('click', '.editUser', function() {
-        //     var user_id = $(this).data('id');
-        //     $.get("{{ route('dashboard.user.index') }}" + '/' + user_id + '/edit', function(data) {
-        //         console.log(
-        //             data
-        //         ); // Tambahkan ini untuk melihat data yang diterima sebelum di-set ke dalam form
-        //         $('#editUserModal').modal('show');
-        //         $('#edit_user_id').val(data.id);
-        //         $('#edit_username').val(data.username);
-        //         $('#edit_fullname').val(data.fullname);
-        //         $('#edit_kode').val(data.kode);
-        //         $('#edit_email').val(data.email);
-        //         $('#edit_nophone').val(data.nophone);
-        //         $('#edit_gender').val(data.gender);
-        //         $('#edit_address').val(data.address);
-        //         $('#edit_referral_code').val(data.referral_code);
-
-        //     });
-        // });
-        // // Save edited user
-        // $('#editSaveBtn').click(function(e) {
-        //     e.preventDefault();
-        //     $(this).html('Sending..');
-
-        //     var user_id = $('#edit_user_id').val();
-
-        //     $.ajax({
-        //         data: $('#editUserForm').serialize(),
-        //         url: "{{ route('dashboard.user.update', ':id') }}".replace(':id', user_id),
-        //         type: "PUT",
-        //         dataType: 'json',
-        //         success: function(data) {
-        //             $('#editUserForm').trigger("reset");
-        //             $('#editUserModal').modal('hide');
-        //             swalSwitch("successedit");
-        //         },
-        //         error: function(data) {
-        //             $('#editUserForm').trigger("reset");
-        //             $('#editUserModal').modal('hide');
-        //             swalSwitch("eroredit");
-        //         }
-        //     });
-        // });
         // Edit user modal
         $('body').on('click', '.editUser', function() {
             var user_id = $(this).data('id');
             $.get("{{ route('dashboard.user.index') }}" + '/' + user_id + '/edit', function(data) {
                 console.log(
-                data); // Tambahkan ini untuk melihat data yang diterima sebelum di-set ke dalam form
+                    data
+                ); // Tambahkan ini untuk melihat data yang diterima sebelum di-set ke dalam form
                 $('#editUserModal').modal('show');
                 $('#edit_user_id').val(data.id);
                 $('#edit_username').val(data.username);
@@ -106,7 +63,6 @@
                 $('#edit_referral_code').val(data.referral_code);
             });
         });
-
         // Save edited user
         $('#editSaveBtn').click(function(e) {
             e.preventDefault();
@@ -480,156 +436,5 @@
                         data.avatar);
                 });
             });
-        });
-    </script> --}}
-
-<!-- Proses crud ajak dengan alert sweetalert -->
-{{-- <script type="text/javascript">
-        $(function() {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-
-            // Create new user modal
-            $('#createNewUser').click(function() {
-                $('#createSaveBtn').val("create-user");
-                $('#createUserForm').trigger("reset");
-                $('#createUserModal').modal('show');
-            });
-
-            // Save created user
-            $('#createSaveBtn').click(function(e) {
-                e.preventDefault();
-                $(this).html('Sending..');
-
-                $.ajax({
-                    data: $('#createUserForm').serialize(),
-                    url: "{{ route('dashboard.user.store') }}",
-                    type: "POST",
-                    dataType: 'json',
-                    success: function(data) {
-                        $('#createUserForm').trigger("reset");
-                        $('#createUserModal').modal('hide');
-                        swalSwitch("create");
-                        location.reload();
-                    },
-                    error: function(data) {
-                        console.log('Error:', data);
-                        $('#createSaveBtn').html('Save Changes');
-                    }
-                });
-            });
-
-            // Edit user modal
-            $('body').on('click', '.editUser', function() {
-                var user_id = $(this).data('id');
-                $.get("{{ route('dashboard.user.index') }}" + '/' + user_id + '/edit', function(data) {
-                    console.log(
-                    data); // Tambahkan ini untuk melihat data yang diterima sebelum di-set ke dalam form
-                    $('#editUserModal').modal('show');
-                    $('#edit_user_id').val(data.id);
-                    $('#edit_username').val(data.username);
-                    $('#edit_fullname').val(data.fullname);
-                    $('#edit_kode').val(data.kode);
-                    $('#edit_email').val(data.email);
-                    $('#edit_nophone').val(data.nophone);
-                    $('#edit_gender').val(data.gender);
-                    $('#edit_address').val(data.address);
-                    $('#edit_referral_code').val(data.referral_code);
-                });
-            });
-
-            // Save edited user
-            $('#editSaveBtn').click(function(e) {
-                e.preventDefault();
-                $(this).html('Sending..');
-
-                var user_id = $('#edit_user_id').val();
-
-                $.ajax({
-                    data: $('#editUserForm').serialize(),
-                    url: "{{ route('dashboard.user.update', ':id') }}".replace(':id', user_id),
-                    type: "PUT",
-                    dataType: 'json',
-                    success: function(data) {
-                        $('#editUserForm').trigger("reset");
-                        $('#editUserModal').modal('hide');
-                        swalSwitch("edit");
-                        location.reload();
-                    },
-                    error: function(data) {
-                        console.log('Error:', data);
-                        $('#editSaveBtn').html('Simpan');
-                    }
-                });
-            });
-
-            // Delete user
-            $('body').on('click', '.deleteUser', function() {
-                var user_id = $(this).data("id");
-
-                if (confirm("Apakah anda yakin ingin di hapus!")) {
-                    $.ajax({
-                        type: "DELETE",
-                        url: "{{ route('dashboard.user.destroy', '') }}/" + user_id,
-                        success: function(data) {
-                            swalSwitch("delete");
-                            location.reload();
-                        },
-                        error: function(data) {
-                            console.log('Error:', data);
-                        }
-                    });
-                }
-            });
-
-            // Show user
-            $('body').on('click', '.showUser', function() {
-                var user_id = $(this).data("id");
-                $.get("{{ route('dashboard.user.index') }}" + '/' + user_id, function(data) {
-                    alert('Username: ' + data.username + '\nNama Lengkap: ' + data.fullname +
-                        '\nKode Referral Anda: ' + data.kode + '\nEmail: ' + data.email +
-                        '\nNo. Telepon: ' + data.nophone + '\nJenis Kelamin: ' + data.gender +
-                        '\nAlamat: ' + data.address + '\nPoin: ' + data.point + '\nAvatar: ' +
-                        data.avatar);
-                });
-            });
-
-            // SweetAlert2 Switch Alert Function
-            function swalSwitch(action) {
-                switch (action) {
-                    case "create":
-                        Swal.fire({
-                            title: "Success!",
-                            text: "Proses tambah data berhasil!",
-                            icon: "success",
-                            confirmButtonColor: "#4a4fea",
-                            confirmButtonText: "OK"
-                        });
-                        break;
-                    case "edit":
-                        Swal.fire({
-                            title: "Success!",
-                            text: "Proses edit data berhasil!",
-                            icon: "success",
-                            confirmButtonColor: "#4a4fea",
-                            confirmButtonText: "OK"
-                        });
-                        break;
-                    case "delete":
-                        Swal.fire({
-                            title: "Success!",
-                            text: "Proses hapus data berhasil!",
-                            icon: "success",
-                            confirmButtonColor: "#4a4fea",
-                            confirmButtonText: "OK"
-                        });
-                        break;
-                    default:
-                        break;
-                }
-            }
         });
     </script> --}}

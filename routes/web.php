@@ -62,28 +62,14 @@ Route::prefix('dashboard')->name('dashboard.')->middleware(['auth'])->group(func
         Route::put('user/{id}', 'update')->name('user.update');
         Route::delete('user/delete/{id}', 'destroy')->name('user.destroy');
     });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    //
+    //
+    //
+    //
+    //
     //halaman Komunitas
     Route::get('/community', function () {
-        return view('pages.admin.community.indexdua');
+        return view('pages.admin.community.index');
     });
     Route::get('/community/create', function () {
         return view('pages.admin.community.create');
