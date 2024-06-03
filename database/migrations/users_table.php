@@ -17,14 +17,14 @@ return new class extends Migration
             $table->string('fullname');
             $table->string('kode')->unique();
             $table->string('email')->unique();
-            $table->string('nophone')->unique();
+            $table->string('no_phone')->unique();
             $table->string('password');
             $table->enum('gender', ['male', 'female', 'others'])->nullable();
             $table->string('address')->nullable();
             $table->bigInteger('point')->default(0);
             $table->string('avatar')->nullable();
             $table->string('referral_code')->nullable();
-            $table->timestamp('email_verified_at')->nullable();
+            // $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
             // $table->foreignId('current_team_id')->nullable();
