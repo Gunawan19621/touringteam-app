@@ -17,6 +17,7 @@ return new class extends Migration
             $table->enum('type', ['terlarang', 'checkpoint']);
             $table->string('name');
             $table->geometry('area');
+            $table->integer('sort')->nullable();
             $table->timestamps();
         });
     }

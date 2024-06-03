@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('t_groups', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('description');
-            $table->integer('distance')->nullable(); // meter
+            $table->text('description');
+            $table->enum('send-notif', ['pic', 'all'])->default('all'); // pic is lead group and can be more then 2
+            $table->integer('distance')->nullable(); // meter, for distance terpisah rombongan
             $table->timestamps();
         });
     }

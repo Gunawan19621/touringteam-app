@@ -8,14 +8,16 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
+     * for table history tracking
      */
     public function up(): void
     {
-        Schema::create('m_documents', function (Blueprint $table) {
+        Schema::create('t_notification_touring', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->date('expired');
-            $table->integer('duration');
+            $table->integer('user_id');
+            $table->integer('group_id'); 
+            $table->integer('group_area_id');
+            $table->string('event_config');
             $table->timestamps();
         });
     }
@@ -25,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('m_documents');
+        Schema::dropIfExists('t_notification_touring');
     }
 };

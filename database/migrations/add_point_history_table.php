@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('m_documents', function (Blueprint $table) {
+        Schema::create('t_add_point_history', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->date('expired');
-            $table->integer('duration');
+            $table->integer('user_id');
+            $table->integer('point');
+            $table->string('type'); // for add active or referal code
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('m_documents');
+        Schema::dropIfExists('t_add_point_history');
     }
 };

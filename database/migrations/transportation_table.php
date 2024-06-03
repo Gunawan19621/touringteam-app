@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('m_vehicles', function (Blueprint $table) {
+        Schema::create('m_transportations', function (Blueprint $table) {
             $table->id();
             $table->string('type');
-            $table->string('nama');
-            $table->string('mesin');
-            $table->integer('thnbeli');
-            $table->integer('thnrakit');
-            $table->text('desc')->nullable();
+            $table->string('name');
+            $table->string('machine');
+            $table->integer('thn_beli');
+            $table->integer('thn_rakit');
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }

@@ -15,9 +15,10 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('group_id');
             $table->bigInteger('user_id');
-            $table->enum('status_approve', ['approve', 'reject']);
-            $table->enum('status', ['active', 'non-active', 'none']);
-            $table->enum('status_sos', ['active', 'non-active']);
+            $table->enum('status_approve', ['waiting','approve', 'reject'])->default('waiting');
+            $table->enum('status', ['active', 'inactive', 'none'])->default('none'); // for status following touring
+            $table->enum('status_sos', ['active', 'inactive']);
+            $table->enum('status_lead', ['true', 'false'])->default('false');
             $table->timestamps();
         });
     }

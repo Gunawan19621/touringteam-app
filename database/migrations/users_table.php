@@ -24,6 +24,7 @@ return new class extends Migration
             $table->bigInteger('point')->default(0);
             $table->string('avatar')->nullable();
             $table->string('referral_code')->nullable();
+            $table->text('fcm_token')->nullable();
             // $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();

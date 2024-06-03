@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('m_documents', function (Blueprint $table) {
+        Schema::create('t_group_destination', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('group_id'); 
             $table->string('name');
-            $table->date('expired');
-            $table->integer('duration');
+            $table->geometry('area');
+            $table->integer('sort')->nullable();
             $table->timestamps();
         });
     }
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('m_documents');
+        Schema::dropIfExists('t_group_destination');
     }
 };

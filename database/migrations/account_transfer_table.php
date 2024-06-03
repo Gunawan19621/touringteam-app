@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('m_documents', function (Blueprint $table) {
+        Schema::create('m_account_transfers', function (Blueprint $table) {
             $table->id();
+            $table->integer('user_id');
             $table->string('name');
-            $table->date('expired');
-            $table->integer('duration');
+            $table->string('no_account'); // for norek or number transfer
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('m_documents');
+        Schema::dropIfExists('m_account_transfer');
     }
 };

@@ -13,13 +13,14 @@ return new class extends Migration
     {
         Schema::create('m_spareparts', function (Blueprint $table) {
             $table->id();
-            $table->string('nama');
-            $table->decimal('estprice', 10, 2);
-            $table->integer('durasi');
-            $table->enum('status', ['active', 'inactive'])->default('active');
-            $table->timestamp('reminder')->nullable();
-            $table->timestamp('last')->nullable();
-            $table->text('desc')->nullable();
+            $table->string('name');
+            $table->decimal('est_price', 10, 2);
+            $table->integer('duration');
+            $table->integer('reminder'); // for reminder notif for example h-10
+            $table->enum('status-reminder', ['active', 'inactive'])->default('inactive'); // for ignore or done
+            // $table->timestamp('reminder')->nullable();
+            $table->timestamp('last_service')->nullable(); // for last replace or service
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }

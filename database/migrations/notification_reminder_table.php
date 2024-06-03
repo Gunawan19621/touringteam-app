@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('m_documents', function (Blueprint $table) {
+        Schema::create('t_notification_reminder', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->date('expired');
-            $table->integer('duration');
+            $table->integer('user_id');
+            $table->integer('ref_reminder_id'); // sparepart or document
+            $table->enum('type', ['sparepart', 'dokument']);
+            $table->enum('status', ['open', 'close'])->default('open');
             $table->timestamps();
         });
     }
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('m_documents');
+        Schema::dropIfExists('t_notification_reminder');
     }
 };
