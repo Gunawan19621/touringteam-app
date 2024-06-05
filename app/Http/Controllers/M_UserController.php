@@ -36,7 +36,7 @@ class M_UserController extends Controller
     //     $user->username = $request->input('username');
     //     $user->fullname = $request->input('fullname');
     //     $user->email = $request->input('email');
-    //     $user->nophone = $request->input('nophone');
+    //     $user->no_phone = $request->input('no_phone');
     //     $user->password = bcrypt($request->input('password')); // Remember to hash the password
     //     $user->kode = $randomCode; // Assign the random code
     //     $user->save();
@@ -52,7 +52,7 @@ class M_UserController extends Controller
         $user->username = $request->input('username');
         $user->fullname = $request->input('fullname');
         $user->email = $request->input('email');
-        $user->nophone = $request->input('nophone');
+        $user->no_phone = $request->input('no_phone');
         $user->password = bcrypt($request->input('password')); // Remember to hash the password
         $user->kode = $randomCode; // Assign the random code
         $user->save();
@@ -87,7 +87,7 @@ class M_UserController extends Controller
         $validatedData = $request->validate([
             'fullname' => 'required|string|max:255',
             'email' => 'required|email|max:255',
-            'nophone' => 'required|string|max:255',
+            'no_phone' => 'required|string|max:255',
             'gender' => 'required|in:male,female,others',
             'address' => 'required|string',
         ]);

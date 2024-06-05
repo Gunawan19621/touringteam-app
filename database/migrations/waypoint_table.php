@@ -21,9 +21,11 @@ return new class extends Migration
             $table->string('altitude');
             $table->string('speed');
             $table->string('angle');
-            $table->timestamps('wptime');
-            $table->timestamps('date_send');
-            $table->timestamps();
+            $table->timestamp('created_at_wptime')->nullable();
+            $table->timestamp('updated_at_wptime')->nullable();
+            $table->timestamp('created_at_date_send')->nullable();
+            $table->timestamp('updated_at_date_send')->nullable();
+            $table->timestamps();  // This will add standard created_at and updated_at
         });
     }
 

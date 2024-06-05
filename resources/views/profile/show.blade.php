@@ -72,7 +72,7 @@
                             <strong>Nama Lengkap :</strong> <span class="ms-2">{{ $user->fullname }}</span>
                         </p>
                         <p class="text-muted font-13">
-                            <strong>No. Tlp :</strong><span class="ms-2">{{ $user->nophone }}</span>
+                            <strong>No. Tlp :</strong><span class="ms-2">{{ $user->no_phone }}</span>
                         </p>
                         <p class="text-muted font-13">
                             <strong>Email :</strong> <span class="ms-2">{{ $user->email }}</span>
@@ -156,11 +156,11 @@
                                     @enderror
                                 </div>
                                 <div class="mb-2">
-                                    <label for="nophone" class="form-label">No. Telepon</label>
-                                    <input type="text" id="nophone" name="nophone"
+                                    <label for="no_phone" class="form-label">No. Telepon</label>
+                                    <input type="text" id="no_phone" name="no_phone"
                                         class="form-control form-control-sm" placeholder="placeholder"
-                                        value="{{ old('nophone', $user->nophone) }}" required>
-                                    @error('nophone')
+                                        value="{{ old('no_phone', $user->no_phone) }}" required>
+                                    @error('no_phone')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>

@@ -30,9 +30,9 @@
                         </div>
                     </div>
                     <div class="form-group mb-2">
-                        <label for="nophone" class="control-label">No. Telepon</label>
+                        <label for="no_phone" class="control-label">No. Telepon</label>
                         <div class="col-sm-12">
-                            <input type="text" class="form-control" id="nophone" name="nophone" required
+                            <input type="text" class="form-control" id="no_phone" name="no_phone" required
                                 placeholder="Masukan Nomor Telepon Anda">
                         </div>
                     </div>
@@ -99,9 +99,9 @@
 
                         <div class="col-6">
                             <div class="form-group mb-2">
-                                <label for="edit_nophone" class="control-label">No. Telepon</label>
+                                <label for="edit_no_phone" class="control-label">No. Telepon</label>
                                 <div class="col-sm-12">
-                                    <input type="text" class="form-control" id="edit_nophone" name="nophone"
+                                    <input type="text" class="form-control" id="edit_no_phone" name="no_phone"
                                         required placeholder="Masukan Nomor Telepon Anda">
                                 </div>
                             </div>

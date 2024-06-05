@@ -64,9 +64,9 @@
 
 @section('title', 'Register')
 
-@section('content')
+{{-- @section('content')
     <div class="row justify-content-center">
-        <div class="col-md-8 col-lg-6 col-xl-4">
+        <div class="col-md-8 col-lg-6 col-xl-6">
             <div class="text-center">
                 <a href="index.html">
                     <img src="{{ asset('assets/images/logo-dark.png') }}" alt="" height="22" class="mx-auto">
@@ -74,77 +74,253 @@
                 <p class="text-muted mt-2 mb-3">Responsive Admin Dashboard</p>
             </div>
             <div class="card">
-
-                <div class="card-body p-4">
-
+                <div class="card-body">
                     <div class="text-center mb-3">
                         <h4 class="text-uppercase mt-0">Register</h4>
                     </div>
 
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
+                        <div class="row mb-2">
+                            <div class="col-md-6">
+                                <label for="username" class="form-label">Username <span class="text-danger">*</span></label>
+                                <input class="form-control" type="text" name="username" id="username"
+                                    placeholder="Masukan username anda" required autofocus autocomplete="username">
+                                @error('username')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="col-md-6">
+                                <label for="fullname" class="form-label">Nama Lengkap <span
+                                        class="text-danger">*</span></label>
+                                <input class="form-control" type="text" name="fullname" id="fullname"
+                                    value="{{ old('fullname') }}" placeholder="Masukan nama lengkap anda" required autofocus
+                                    autocomplete="fullname">
+                                @error('fullname')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
 
-                        <div class="mb-2">
-                            <label for="username" class="form-label">Username</label>
-                            <input class="form-control" type="text" name="username" id="username"
-                                placeholder="Enter your username" required autofocus autocomplete="username">
+                        <div class="row mb-2">
+                            <div class="col-md-6">
+                                <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+                                <input class="form-control" type="email" name="email" value="{{ old('email') }}"
+                                    id="email" value="{{ old('email') }}" placeholder="Masukan email anda" required
+                                    autocomplete="username">
+                                @error('email')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="col-md-6">
+                                <label for="no_phone" class="form-label">No. Telepon <span
+                                        class="text-danger">*</span></label>
+                                <input class="form-control" type="text" name="no_phone" value="{{ old('no_phone') }}"
+                                    id="no_phone" placeholder="Masukan nomro telepon anda" required
+                                    autocomplete="no_phone">
+                                @error('no_phone')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
                         </div>
-                        <div class="mb-2">
-                            <label for="fullname" class="form-label">Nama Lengkap</label>
-                            <input class="form-control" type="text" name="fullname" id="fullname"
-                                value="{{ old('fullname') }}" placeholder="Enter your fullname" required autofocus
-                                autocomplete="fullname">
+
+                        <div class="row mb-2">
+                            <div class="col-md-6">
+                                <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
+                                <input class="form-control" type="password" id="password" name="password" required
+                                    placeholder="Enter your password" autocomplete="new-password">
+                                @error('password')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="col-md-6">
+                                <label for="password_confirmation" class="form-label">Confirm Password <span
+                                        class="text-danger">*</span></label>
+                                <input class="form-control" type="password" id="password_confirmation"
+                                    name="password_confirmation" required placeholder="Enter your confirmation password"
+                                    autocomplete="new-password">
+                                @error('password_confirmation')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
                         </div>
-                        <div class="mb-2">
-                            <label for="email" class="form-label">Email</label>
-                            <input class="form-control" type="email" name="email" value="{{ old('email') }}"
-                                id="email" value="{{ old('email') }}" placeholder="Enter your email" required
-                                autocomplete="username">
-                        </div>
-                        <div class="mb-2">
-                            <label for="nophone" class="form-label">No. Telepon</label>
-                            <input class="form-control" type="text" name="nophone" value="{{ old('nophone') }}"
-                                id="nophone" value="{{ old('nophone') }}" placeholder="Enter your phone number" required
-                                autocomplete="nophone">
-                        </div>
-                        <div class="mb-2">
-                            <label for="password" class="form-label">Password</label>
-                            <input class="form-control" type="password" id="password" name="password" required
-                                placeholder="Enter your password" autocomplete="new-password">
-                        </div>
+
                         <div class="mb-3">
-                            <label for="password_confirmation" class="form-label">Confirm Password</label>
-                            <input class="form-control" type="password" id="password_confirmation"
-                                name="password_confirmation" required placeholder="Enter your confirmation password"
-                                autocomplete="new-password">
+                            <label for="referral_code" class="form-label">Kode referal</label>
+                            <input class="form-control" type="text" name="referral_code"
+                                value="{{ old('referral_code') }}" id="referral_code"
+                                placeholder="Masukan kode referal anda" autocomplete="referral_code">
+                            @error('referral_code')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
+
                         <div class="mb-3">
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" id="checkbox-signup">
-                                <label class="form-check-label" for="checkbox-signup">I accept <a
-                                        href="javascript: void(0);" class="text-dark">Terms and
-                                        Conditions</a></label>
+                                <label class="form-check-label" for="checkbox-signup">Saya menerima Syarat dan
+                                    Ketentuan yang Berlaku</label>
+                                @error('terms')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
+
                         <div class="mb-2 text-center d-grid">
                             <button class="btn btn-primary" type="submit"> Sign Up </button>
                         </div>
-
                     </form>
-
-                </div> <!-- end card-body -->
+                </div>
             </div>
-            <!-- end card -->
 
+            <!-- Already account = Login -->
             <div class="row mt-3">
                 <div class="col-12 text-center">
                     <p class="text-muted">Already have account? <a href="{{ route('login') }}"
                             class="text-dark ms-1"><b>Sign
                                 In</b></a></p>
-                </div> <!-- end col -->
+                </div>
             </div>
-            <!-- end row -->
+        </div>
+    </div>
+@endsection --}}
+@section('content')
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6 col-xl-6">
+            <div class="text-center">
+                <a href="index.html">
+                    <img src="{{ asset('assets/images/logo-dark.png') }}" alt="" height="22" class="mx-auto">
+                </a>
+                <p class="text-muted mt-2 mb-3">Responsive Admin Dashboard</p>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <div class="text-center mb-3">
+                        <h4 class="text-uppercase mt-0">Register</h4>
+                    </div>
 
-        </div> <!-- end col -->
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li class="text-danger">{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
+                    <form method="POST" action="{{ route('register') }}">
+                        @csrf
+                        <div class="row mb-2">
+                            <div class="col-md-6">
+                                <label for="username" class="form-label">Username <span class="text-danger">*</span></label>
+                                <input class="form-control" type="text" name="username" id="username"
+                                    placeholder="Masukan username anda" value="{{ old('username') }}" required autofocus
+                                    autocomplete="username">
+                                @error('username')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="col-md-6">
+                                <label for="fullname" class="form-label">Nama Lengkap <span
+                                        class="text-danger">*</span></label>
+                                <input class="form-control" type="text" name="fullname" id="fullname"
+                                    value="{{ old('fullname') }}" placeholder="Masukan nama lengkap anda" required autofocus
+                                    autocomplete="fullname">
+                                @error('fullname')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="col-md-6">
+                                <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+                                <input class="form-control" type="email" name="email" value="{{ old('email') }}"
+                                    id="email" placeholder="Masukan email anda" required autocomplete="email">
+                                @error('email')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="col-md-6">
+                                <label for="no_phone" class="form-label">No. Telepon <span
+                                        class="text-danger">*</span></label>
+                                <input class="form-control" type="text" name="no_phone" value="{{ old('no_phone') }}"
+                                    id="no_phone" placeholder="Masukan nomro telepon anda" required
+                                    autocomplete="no_phone">
+                                @error('no_phone')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="col-md-6">
+                                <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
+                                <input class="form-control" type="password" id="password" name="password" required
+                                    placeholder="Enter your password" autocomplete="new-password">
+                                @error('password')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="col-md-6">
+                                <label for="password_confirmation" class="form-label">Confirm Password <span
+                                        class="text-danger">*</span></label>
+                                <input class="form-control" type="password" id="password_confirmation"
+                                    name="password_confirmation" required placeholder="Enter your confirmation password"
+                                    autocomplete="new-password">
+                                @error('password_confirmation')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="referral_code" class="form-label">Kode referal</label>
+                            <input class="form-control" type="text" name="referral_code"
+                                value="{{ old('referral_code') }}" id="referral_code"
+                                placeholder="Masukan kode referal anda" autocomplete="referral_code">
+                            @error('referral_code')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="checkbox-signup" name="terms"
+                                    required>
+                                <label class="form-check-label" for="checkbox-signup">Saya menerima Syarat dan
+                                    Ketentuan yang Berlaku</label>
+                                @error('terms')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="mb-2 text-center d-grid">
+                            <button class="btn btn-primary" type="submit">Sign Up</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Already have an account? -->
+            <div class="row mt-3">
+                <div class="col-12 text-center">
+                    <p class="text-muted">Already have account? <a href="{{ route('login') }}"
+                            class="text-dark ms-1"><b>Sign In</b></a></p>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection

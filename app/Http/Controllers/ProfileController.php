@@ -69,7 +69,7 @@ class ProfileController extends Controller
             // Update atribut user dengan data yang diterima dari request
             $user->fullname = $request->fullname;
             $user->email = $request->email;
-            $user->nophone = $request->nophone;
+            $user->no_phone = $request->no_phone;
             $user->gender = $request->gender;
             $user->address = $request->address;
             $user->save();

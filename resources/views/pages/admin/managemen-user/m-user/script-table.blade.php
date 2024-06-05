@@ -50,7 +50,7 @@
                 $('#edit_fullname').val(data.fullname);
                 $('#edit_kode').val(data.kode);
                 $('#edit_email').val(data.email);
-                $('#edit_nophone').val(data.nophone);
+                $('#edit_no_phone').val(data.no_phone);
 
                 // Set gender
                 if (data.gender) {
@@ -112,7 +112,7 @@
             $.get("{{ route('dashboard.user.index') }}" + '/' + user_id, function(data) {
                 alert('Username: ' + data.username + '\nNama Lengkap: ' + data.fullname +
                     '\nKode Referral Anda: ' + data.kode + '\nEmail: ' + data.email +
-                    '\nNo. Telepon: ' + data.nophone + '\nJenis Kelamin: ' + data.gender +
+                    '\nNo. Telepon: ' + data.no_phone + '\nJenis Kelamin: ' + data.gender +
                     '\nAlamat: ' + data.address + '\nPoin: ' + data.point + '\nAvatar: ' +
                     data.avatar);
             });
@@ -259,7 +259,7 @@
                     $('#edit_fullname').val(data.fullname);
                     $('#edit_kode').val(data.kode);
                     $('#edit_email').val(data.email);
-                    $('#edit_nophone').val(data.nophone);
+                    $('#edit_no_phone').val(data.no_phone);
                     $('#edit_gender').val(data.gender);
                     $('#edit_address').val(data.address);
                     $('#edit_referral_code').val(data.referral_code);
@@ -314,7 +314,7 @@
                 $.get("{{ route('dashboard.user.index') }}" + '/' + user_id, function(data) {
                     alert('Username: ' + data.username + '\nNama Lengkap: ' + data.fullname +
                         '\nKode Referral Anda: ' + data.kode + '\nEmail: ' + data.email +
-                        '\nNo. Telepon: ' + data.nophone + '\nJenis Kelamin: ' + data.gender +
+                        '\nNo. Telepon: ' + data.no_phone + '\nJenis Kelamin: ' + data.gender +
                         '\nAlamat: ' + data.address + '\nPoin: ' + data.point + '\nAvatar: ' +
                         data.avatar);
                 });
@@ -374,7 +374,7 @@
                     $('#edit_fullname').val(data.fullname);
                     $('#edit_kode').val(data.kode);
                     $('#edit_email').val(data.email);
-                    $('#edit_nophone').val(data.nophone);
+                    $('#edit_no_phone').val(data.no_phone);
                     $('#edit_gender').val(data.gender);
                     $('#edit_address').val(data.address);
                     $('#edit_referral_code').val(data.referral_code);
@@ -431,7 +431,7 @@
                 $.get("{{ route('dashboard.user.index') }}" + '/' + user_id, function(data) {
                     alert('Username: ' + data.username + '\nNama Lengkap: ' + data.fullname +
                         '\nKode Referral Anda: ' + data.kode + '\nEmail: ' + data.email +
-                        '\nNo. Telepon: ' + data.nophone + '\nJenis Kelamin: ' + data.gender +
+                        '\nNo. Telepon: ' + data.no_phone + '\nJenis Kelamin: ' + data.gender +
                         '\nAlamat: ' + data.address + '\nPoin: ' + data.point + '\nAvatar: ' +
                         data.avatar);
                 });

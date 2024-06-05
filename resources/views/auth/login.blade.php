@@ -69,6 +69,17 @@
                         <h4 class="text-uppercase mt-0">Sign In</h4>
                     </div>
 
+                    <!-- Menampilkan pesan kesalahan -->
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
 
@@ -77,6 +88,11 @@
                             <input class="form-control" type="email" id="email" name="email" required autofocus
                                 autocomplete="username" value="{{ old('email') }}" placeholder="Enter your email">
                         </div>
+                        {{-- <div class="mb-2">
+                            <label for="login" class="form-label">Email address or Username</label>
+                            <input class="form-control" type="text" id="login" name="login" required autofocus
+                                value="{{ old('login') }}" placeholder="Enter your email or username">
+                        </div> --}}
 
                         <div class="mb-3">
                             <label for="password" class="form-label">Password</label>

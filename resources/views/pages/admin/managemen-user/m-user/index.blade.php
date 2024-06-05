@@ -37,7 +37,7 @@
                             <td>{{ $user->fullname }}</td>
                             <td>{{ $user->kode }}</td>
                             <td>{{ $user->email }}</td>
-                            <td>{{ $user->nophone }}</td>
+                            <td>{{ $user->no_phone }}</td>
                             <td>{{ $user->address }}</td>
                             <td>
                                 <button class="btn btn-success editUser" data-id="{{ $user->id }}">Edit</button>
