@@ -180,7 +180,7 @@
                                 <a href="{{ route('dashboard.user.index') }}">User</a>
                             </li>
                             <li>
-                                <a href="#">Role</a>
+                                <a href="{{ route('dashboard.role.index') }}">Role</a>
                             </li>
                         </ul>
                     </div>

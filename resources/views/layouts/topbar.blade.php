@@ -228,20 +228,20 @@
 
     <!-- LOGO pada saat responsive-->
     <div class="logo-box">
-        <a href="index.html" class="logo logo-light text-center">
+        {{-- <a href="index.html" class="logo logo-light text-center">
             <span class="logo-sm">
                 <img src="{{ asset('assets/images/logo-sm.png') }}" alt="" height="22">
             </span>
             <span class="logo-lg">
                 <img src="{{ asset('assets/images/logo-light.png') }}" alt="" height="16">
             </span>
-        </a>
-        <a href="index.html" class="logo logo-dark text-center">
+        </a> --}}
+        <a href="{{ route('dashboard') }}" class="logo logo-dark text-center">
             <span class="logo-sm">
-                <img src="{{ asset('assets/images/logo-sm.png') }}" alt="" height="22">
+                <img src="{{ asset('assets/images/logo.png') }}" alt="" style="width: 50px">
             </span>
             <span class="logo-lg">
-                <img src="{{ asset('assets/images/logo-dark.png') }}" alt="" height="16">
+                <img src="{{ asset('assets/images/logo.png') }}" alt="" style="width: 70px">
             </span>
         </a>
     </div>

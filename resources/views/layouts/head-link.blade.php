@@ -1,5 +1,5 @@
 <!-- App favicon -->
-<link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}">
+<link rel="shortcut icon" href="{{ asset('assets/images/logo.png') }}">
 
 <!-- third party css -->
 <link href="{{ asset('assets/libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css') }}" rel="stylesheet"

@@ -52,7 +52,7 @@ Route::prefix('dashboard')->name('dashboard.')->middleware(['auth'])->group(func
         Route::put('profile/{id}/update-password', 'updatePassword')->name('profile.updatePassword');
     });
 
-    //halaman managemen user
+    //halaman managemen user belum di cek linkk mana aja yang di pakai
     Route::controller(App\Http\Controllers\M_UserController::class)->group(function () {
         Route::get('user', 'index')->name('user.index');
         Route::get('user/create', 'create')->name('user.create');
@@ -62,6 +62,18 @@ Route::prefix('dashboard')->name('dashboard.')->middleware(['auth'])->group(func
         Route::put('user/{id}', 'update')->name('user.update');
         Route::delete('user/delete/{id}', 'destroy')->name('user.destroy');
     });
+
+    //halaman managemen role
+    Route::controller(App\Http\Controllers\M_RoleController::class)->group(function () {
+        Route::get('role', 'index')->name('role.index');
+        // Route::get('role/create', 'create')->name('role.create');
+        // Route::post('role/store', 'store')->name('role.store');
+        // Route::get('role/{id}', 'show')->name('role.show');
+        // Route::get('role/{id}/edit', 'edit')->name('role.edit');
+        // Route::put('role/{id}', 'update')->name('role.update');
+        // Route::delete('role/delete/{id}', 'destroy')->name('role.destroy');
+    });
+
     //
     //
     //
