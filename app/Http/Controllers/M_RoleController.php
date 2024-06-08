@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\M_Role;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class M_RoleController extends Controller
 {
@@ -29,7 +30,13 @@ class M_RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $role = new M_Role();
+        $role->rolename = $request->input('rolename');
+        $role->description = $request->input('description');
+        $role->save();
+
+        return response()->json(['success' => true, 'message' => 'Proses tambah data berhasil!']);
     }
 
     /**
@@ -37,7 +44,8 @@ class M_RoleController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $role = M_Role::find($id);
+        return response()->json($role);
     }
 
     /**
@@ -45,7 +53,8 @@ class M_RoleController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $role = M_Role::find($id);
+        return response()->json($role);
     }
 
     /**
@@ -53,14 +62,25 @@ class M_RoleController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validatedData = $request->validate([
+            'rolename' => 'required|string|max:255',
+            'description' => 'nullable|string|max:255',
+        ]);
+
+        $role = M_Role::findOrFail($id);
+        $role->update($validatedData);
+
+        return response()->json($role);
     }
+
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
-        //
+        $role = M_Role::find($id);
+        $role->delete();
+        return response()->json(['success' => 'Role deleted successfully']);
     }
 }

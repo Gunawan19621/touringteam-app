@@ -21,30 +21,22 @@ class M_UserController extends Controller
      */
     public function create()
     {
-        return view('pages.admin.managemen-user.m-user.create');
+        // return view('pages.admin.managemen-user.m-user.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    // public function store(Request $request)
-    // {
-    //     // Generate random code with alphanumeric characters (6 characters long)
-    //     $randomCode = substr(str_shuffle(str_repeat('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', 6)), 0, 6);
-
-    //     $user = new User();
-    //     $user->username = $request->input('username');
-    //     $user->fullname = $request->input('fullname');
-    //     $user->email = $request->input('email');
-    //     $user->no_phone = $request->input('no_phone');
-    //     $user->password = bcrypt($request->input('password')); // Remember to hash the password
-    //     $user->kode = $randomCode; // Assign the random code
-    //     $user->save();
-
-    //     return response()->json($user);
-    // }
     public function store(Request $request)
     {
+        $request->validate([
+            'username' => 'required',
+            'fullname' => 'required',
+            'email' => 'required|email',
+            'no_phone' => 'required',
+            'password' => 'required'
+        ]);
+
         // Generate random code with alphanumeric characters (6 characters long)
         $randomCode = substr(str_shuffle(str_repeat('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', 6)), 0, 6);
 

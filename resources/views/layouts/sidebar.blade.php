@@ -144,17 +144,17 @@
                 </li>
                 <li>
                     <a href="#reminder" data-bs-toggle="collapse">
-                        <i class="mdi mdi-account-group"></i>
-                        <span> Reminder </span>
+                        <i class="mdi mdi-reminder"></i>
+                        <span> Pengingat </span>
                         <span class="menu-arrow"></span>
                     </a>
                     <div class="collapse" id="reminder">
                         <ul class="nav-second-level">
                             <li>
-                                <a href="{{ route('dashboard.reminder-document.index') }}">Document</a>
+                                <a href="{{ route('dashboard.document.index') }}">Document Pengingat</a>
                             </li>
                             <li>
-                                <a href="{{ url('/dashboard/reminder-sparepart') }}">Sparepart</a>
+                                <a href="{{ url('/dashboard/reminder-sparepart') }}">Sparepart Pengingat</a>
                             </li>
                         </ul>
                     </div>
@@ -170,7 +170,7 @@
                 <li class="menu-title mt-2">System</li>
                 <li>
                     <a href="#managemenuser" data-bs-toggle="collapse">
-                        <i class="mdi mdi-account-group"></i>
+                        <i class="mdi mdi-account-cog"></i>
                         <span> Managemen User </span>
                         <span class="menu-arrow"></span>
                     </a>

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->date('expired');
             $table->integer('duration');
+            $table->enum('duration_type', ['day', 'month', 'year']);
             $table->timestamps();
         });
     }

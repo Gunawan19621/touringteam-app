@@ -8,94 +8,81 @@
             }
         });
 
-        // Create new user modal
-        $('#createNewUser').click(function() {
-            $('#createSaveBtn').val("create-user");
-            $('#createUserForm').trigger("reset");
-            $('#createUserModal').modal('show');
+        // Create new role modal
+        $('#createNewRole').click(function() {
+            $('#createSaveBtn').val("create-role");
+            $('#createRoleForm').trigger("reset");
+            $('#createRoleModal').modal('show');
         });
-        // Save created user
+        // Save created Role
         $('#createSaveBtn').click(function(e) {
             e.preventDefault();
             $(this).html('Sending..');
 
             $.ajax({
-                data: $('#createUserForm').serialize(),
-                url: "{{ route('dashboard.user.store') }}",
+                data: $('#createRoleForm').serialize(),
+                url: "{{ route('dashboard.role.store') }}",
                 type: "POST",
                 dataType: 'json',
                 success: function(data) {
-                    $('#createUserForm').trigger("reset");
-                    $('#createUserModal').modal('hide');
+                    $('#createRoleForm').trigger("reset");
+                    $('#createRoleModal').modal('hide');
                     swalSwitch("successcreate");
                 },
                 error: function(data) {
-                    $('#createUserForm').trigger("reset");
-                    $('#createUserModal').modal('hide');
+                    $('#createRoleForm').trigger("reset");
+                    $('#createRoleModal').modal('hide');
                     swalSwitch("erorcreate");
                 }
             });
         });
 
-        // Edit user modal
-        $('body').on('click', '.editUser', function() {
-            var user_id = $(this).data('id');
-            $.get("{{ route('dashboard.user.index') }}" + '/' + user_id + '/edit', function(data) {
+        // Edit Role modal
+        $('body').on('click', '.editRole', function() {
+            var role_id = $(this).data('id');
+            $.get("{{ route('dashboard.role.index') }}" + '/' + role_id + '/edit', function(data) {
                 console.log(
                     data
-                ); // Tambahkan ini untuk melihat data yang diterima sebelum di-set ke dalam form
-                $('#editUserModal').modal('show');
-                $('#edit_user_id').val(data.id);
-                $('#edit_username').val(data.username);
-                $('#edit_fullname').val(data.fullname);
-                $('#edit_kode').val(data.kode);
-                $('#edit_email').val(data.email);
-                $('#edit_no_phone').val(data.no_phone);
-
-                // Set gender
-                if (data.gender) {
-                    $('#edit_gender').val(data.gender);
-                } else {
-                    $('#edit_gender').val('');
-                }
-
-                $('#edit_address').val(data.address);
-                $('#edit_referral_code').val(data.referral_code);
+                );
+                $('#editRoleModal').modal('show');
+                $('#edit_role_id').val(data.id);
+                $('#edit_rolename').val(data.rolename);
+                $('#edit_description').val(data.description);
             });
         });
-        // Save edited user
+        // Save edited Role
         $('#editSaveBtn').click(function(e) {
             e.preventDefault();
             $(this).html('Sending..');
 
-            var user_id = $('#edit_user_id').val();
+            var role_id = $('#edit_role_id').val();
 
             $.ajax({
-                data: $('#editUserForm').serialize(),
-                url: "{{ route('dashboard.user.update', ':id') }}".replace(':id', user_id),
+                data: $('#editRoleForm').serialize(),
+                url: "{{ route('dashboard.role.update', ':id') }}".replace(':id', role_id),
                 type: "PUT",
                 dataType: 'json',
                 success: function(data) {
-                    $('#editUserForm').trigger("reset");
-                    $('#editUserModal').modal('hide');
+                    $('#editRoleForm').trigger("reset");
+                    $('#editRoleModal').modal('hide');
                     swalSwitch("successedit");
                 },
                 error: function(data) {
-                    $('#editUserForm').trigger("reset");
-                    $('#editUserModal').modal('hide');
+                    $('#editRoleForm').trigger("reset");
+                    $('#editRoleModal').modal('hide');
                     swalSwitch("eroredit");
                 }
             });
         });
 
-        // Delete user
-        $('body').on('click', '.deleteUser', function() {
-            var user_id = $(this).data("id");
+        // Delete Role
+        $('body').on('click', '.deleteRole', function() {
+            var role_id = $(this).data("id");
 
             if (confirm("Apakah anda yakin ingin di hapus!")) {
                 $.ajax({
                     type: "DELETE",
-                    url: "{{ route('dashboard.user.destroy', '') }}/" + user_id,
+                    url: "{{ route('dashboard.role.destroy', '') }}/" + role_id,
                     success: function(data) {
                         swalSwitch("successdelete");
                     },
@@ -106,15 +93,11 @@
             }
         });
 
-        // Show user
-        $('body').on('click', '.showUser', function() {
-            var user_id = $(this).data("id");
-            $.get("{{ route('dashboard.user.index') }}" + '/' + user_id, function(data) {
-                alert('Username: ' + data.username + '\nNama Lengkap: ' + data.fullname +
-                    '\nKode Referral Anda: ' + data.kode + '\nEmail: ' + data.email +
-                    '\nNo. Telepon: ' + data.no_phone + '\nJenis Kelamin: ' + data.gender +
-                    '\nAlamat: ' + data.address + '\nPoin: ' + data.point + '\nAvatar: ' +
-                    data.avatar);
+        // Show Role
+        $('body').on('click', '.showRole', function() {
+            var role_id = $(this).data("id");
+            $.get("{{ route('dashboard.role.index') }}" + '/' + role_id, function(data) {
+                alert('Rolename : ' + data.rolename + '\nDescription : ' + data.description);
             });
         });
 
@@ -125,7 +108,7 @@
                 case "successcreate":
                     Swal.fire({
                         title: "Success!",
-                        text: "User Berhasil di Tambahkan!",
+                        text: "ROle Berhasil di Tambahkan!",
                         icon: "success",
                         confirmButtonColor: "#4a4fea",
                         confirmButtonText: "OK"
@@ -138,7 +121,7 @@
                 case "erorcreate":
                     Swal.fire({
                         title: "Error!",
-                        text: "User Gagal di Tambahkan!",
+                        text: "Role Gagal di Tambahkan!",
                         icon: "error",
                         confirmButtonColor: "#4a4fea",
                         confirmButtonText: "Coba Lagi"
@@ -153,7 +136,7 @@
                 case "successedit":
                     Swal.fire({
                         title: "Success!",
-                        text: "User Berhasil di Update!",
+                        text: "Role Berhasil di Update!",
                         icon: "success",
                         confirmButtonColor: "#4a4fea",
                         confirmButtonText: "OK"
@@ -166,7 +149,7 @@
                 case "eroredit":
                     Swal.fire({
                         title: "Error!",
-                        text: "User Gagal di Update!",
+                        text: "Role Gagal di Update!",
                         icon: "error",
                         confirmButtonColor: "#4a4fea",
                         confirmButtonText: "Coba Lagi"
@@ -181,7 +164,7 @@
                 case "successdelete":
                     Swal.fire({
                         title: "Success!",
-                        text: "User Berhasil di Hapus!",
+                        text: "Role Berhasil di Hapus!",
                         icon: "success",
                         confirmButtonColor: "#4a4fea",
                         confirmButtonText: "OK"
@@ -194,7 +177,7 @@
                 case "erordelete":
                     Swal.fire({
                         title: "Error!",
-                        text: "User Gagal di Hapus!",
+                        text: "Role Gagal di Hapus!",
                         icon: "error",
                         confirmButtonColor: "#4a4fea",
                         confirmButtonText: "Coba Lagi"
@@ -208,233 +191,3 @@
         }
     });
 </script>
-
-<!-- Proses crud ajak tanpa alert -->
-{{-- <script type="text/javascript">
-        $(function() {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-
-            // Create new user modal
-            $('#createNewUser').click(function() {
-                $('#createSaveBtn').val("create-user");
-                $('#createUserForm').trigger("reset");
-                $('#createUserModal').modal('show');
-            });
-            // Save created user
-            $('#createSaveBtn').click(function(e) {
-                e.preventDefault();
-                $(this).html('Sending..');
-
-                $.ajax({
-                    data: $('#createUserForm').serialize(),
-                    url: "{{ route('dashboard.user.store') }}",
-                    type: "POST",
-                    dataType: 'json',
-                    success: function(data) {
-                        $('#createUserForm').trigger("reset");
-                        $('#createUserModal').modal('hide');
-                        location.reload();
-                    },
-                    error: function(data) {
-                        console.log('Error:', data);
-                        $('#createSaveBtn').html('Save Changes');
-                    }
-                });
-            });
-
-            // Edit user modal
-            $('body').on('click', '.editUser', function() {
-                var user_id = $(this).data('id');
-                $.get("{{ route('dashboard.user.index') }}" + '/' + user_id + '/edit', function(data) {
-                    console.log(
-                        data
-                    ); // Tambahkan ini untuk melihat data yang diterima sebelum di-set ke dalam form
-                    $('#editUserModal').modal('show');
-                    $('#edit_user_id').val(data.id);
-                    $('#edit_username').val(data.username);
-                    $('#edit_fullname').val(data.fullname);
-                    $('#edit_kode').val(data.kode);
-                    $('#edit_email').val(data.email);
-                    $('#edit_no_phone').val(data.no_phone);
-                    $('#edit_gender').val(data.gender);
-                    $('#edit_address').val(data.address);
-                    $('#edit_referral_code').val(data.referral_code);
-
-                });
-            });
-            // Save edited user
-            $('#editSaveBtn').click(function(e) {
-                e.preventDefault();
-                $(this).html('Sending..');
-
-                var user_id = $('#edit_user_id').val();
-
-                $.ajax({
-                    data: $('#editUserForm').serialize(),
-                    url: "{{ route('dashboard.user.update', ':id') }}".replace(':id', user_id),
-                    type: "PUT",
-                    dataType: 'json',
-                    success: function(data) {
-                        $('#editUserForm').trigger("reset");
-                        $('#editUserModal').modal('hide');
-                        location.reload();
-                    },
-                    error: function(data) {
-                        console.log('Error:', data);
-                        $('#editSaveBtn').html('Simpan');
-                    }
-                });
-            });
-
-            // Delete user
-            $('body').on('click', '.deleteUser', function() {
-                var user_id = $(this).data("id");
-
-                if (confirm("Apakah anda yakin ingin di hapus!")) {
-                    $.ajax({
-                        type: "DELETE",
-                        url: "{{ route('dashboard.user.destroy', '') }}/" + user_id,
-                        success: function(data) {
-                            location.reload();
-                        },
-                        error: function(data) {
-                            console.log('Error:', data);
-                        }
-                    });
-                }
-            });
-
-            // Show user
-            $('body').on('click', '.showUser', function() {
-                var user_id = $(this).data("id");
-                $.get("{{ route('dashboard.user.index') }}" + '/' + user_id, function(data) {
-                    alert('Username: ' + data.username + '\nNama Lengkap: ' + data.fullname +
-                        '\nKode Referral Anda: ' + data.kode + '\nEmail: ' + data.email +
-                        '\nNo. Telepon: ' + data.no_phone + '\nJenis Kelamin: ' + data.gender +
-                        '\nAlamat: ' + data.address + '\nPoin: ' + data.point + '\nAvatar: ' +
-                        data.avatar);
-                });
-            });
-        });
-    </script> --}}
-
-<!-- Proses crud ajak dengan alert alert bawaan json -->
-{{-- <script type="text/javascript">
-        $(function() {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-
-            // Create new user modal
-            $('#createNewUser').click(function() {
-                $('#createSaveBtn').val("create-user");
-                $('#createUserForm').trigger("reset");
-                $('#createUserModal').modal('show');
-            });
-
-            // Save created user
-            $('#createSaveBtn').click(function(e) {
-                e.preventDefault();
-                $(this).html('Sending..');
-
-                $.ajax({
-                    data: $('#createUserForm').serialize(),
-                    url: "{{ route('dashboard.user.store') }}",
-                    type: "POST",
-                    dataType: 'json',
-                    success: function(data) {
-                        $('#createUserForm').trigger("reset");
-                        $('#createUserModal').modal('hide');
-                        alert("Proses tambah data berhasil!");
-                        location.reload();
-                    },
-                    error: function(data) {
-                        console.log('Error:', data);
-                        $('#createSaveBtn').html('Simpan');
-                    }
-                });
-            });
-
-            // Edit user modal
-            $('body').on('click', '.editUser', function() {
-                var user_id = $(this).data('id');
-                $.get("{{ route('dashboard.user.index') }}" + '/' + user_id + '/edit', function(data) {
-                    console.log(
-                        data
-                    ); // Tambahkan ini untuk melihat data yang diterima sebelum di-set ke dalam form
-                    $('#editUserModal').modal('show');
-                    $('#edit_user_id').val(data.id);
-                    $('#edit_username').val(data.username);
-                    $('#edit_fullname').val(data.fullname);
-                    $('#edit_kode').val(data.kode);
-                    $('#edit_email').val(data.email);
-                    $('#edit_no_phone').val(data.no_phone);
-                    $('#edit_gender').val(data.gender);
-                    $('#edit_address').val(data.address);
-                    $('#edit_referral_code').val(data.referral_code);
-                });
-            });
-
-            // Save edited user
-            $('#editSaveBtn').click(function(e) {
-                e.preventDefault();
-                $(this).html('Sending..');
-
-                var user_id = $('#edit_user_id').val();
-
-                $.ajax({
-                    data: $('#editUserForm').serialize(),
-                    url: "{{ route('dashboard.user.update', ':id') }}".replace(':id', user_id),
-                    type: "PUT",
-                    dataType: 'json',
-                    success: function(data) {
-                        $('#editUserForm').trigger("reset");
-                        $('#editUserModal').modal('hide');
-                        alert("Proses edit data berhasil!");
-                        location.reload();
-                    },
-                    error: function(data) {
-                        console.log('Error:', data);
-                        $('#editSaveBtn').html('Simpan');
-                    }
-                });
-            });
-
-            // Delete user
-            $('body').on('click', '.deleteUser', function() {
-                var user_id = $(this).data("id");
-
-                if (confirm("Apakah anda yakin ingin di hapus!")) {
-                    $.ajax({
-                        type: "DELETE",
-                        url: "{{ route('dashboard.user.destroy', '') }}/" + user_id,
-                        success: function(data) {
-                            alert("Proses hapus data berhasil!");
-                            location.reload();
-                        },
-                        error: function(data) {
-                            console.log('Error:', data);
-                        }
-                    });
-                }
-            });
-
-            // Show user
-            $('body').on('click', '.showUser', function() {
-                var user_id = $(this).data("id");
-                $.get("{{ route('dashboard.user.index') }}" + '/' + user_id, function(data) {
-                    alert('Username: ' + data.username + '\nNama Lengkap: ' + data.fullname +
-                        '\nKode Referral Anda: ' + data.kode + '\nEmail: ' + data.email +
-                        '\nNo. Telepon: ' + data.no_phone + '\nJenis Kelamin: ' + data.gender +
-                        '\nAlamat: ' + data.address + '\nPoin: ' + data.point + '\nAvatar: ' +
-                        data.avatar);
-                });
-            });
-        });
-    </script> --}}

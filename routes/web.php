@@ -52,10 +52,25 @@ Route::prefix('dashboard')->name('dashboard.')->middleware(['auth'])->group(func
         Route::put('profile/{id}/update-password', 'updatePassword')->name('profile.updatePassword');
     });
 
-    //halaman managemen user belum di cek linkk mana aja yang di pakai
+    //Menu
+    //Halaman Reminder Document
+    Route::controller(App\Http\Controllers\M_DocumentController::class)->group(function () {
+        Route::get('document', 'index')->name('document.index');
+        // Route::get('document/create', 'create')->name('document.create');
+        Route::post('document/store', 'store')->name('document.store');
+        Route::get('document/{id}', 'show')->name('document.show');
+        Route::get('document/{id}/edit', 'edit')->name('document.edit');
+        Route::put('document/{id}', 'update')->name('document.update');
+        Route::delete('document/delete/{id}', 'destroy')->name('document.destroy');
+    });
+
+    //Halaman Reminder Sparepart
+
+    //System
+    //halaman Managemen User
     Route::controller(App\Http\Controllers\M_UserController::class)->group(function () {
         Route::get('user', 'index')->name('user.index');
-        Route::get('user/create', 'create')->name('user.create');
+        // Route::get('user/create', 'create')->name('user.create');
         Route::post('user/store', 'store')->name('user.store');
         Route::get('user/{id}', 'show')->name('user.show');
         Route::get('user/{id}/edit', 'edit')->name('user.edit');
@@ -63,15 +78,15 @@ Route::prefix('dashboard')->name('dashboard.')->middleware(['auth'])->group(func
         Route::delete('user/delete/{id}', 'destroy')->name('user.destroy');
     });
 
-    //halaman managemen role
+    //halaman Managemen role
     Route::controller(App\Http\Controllers\M_RoleController::class)->group(function () {
         Route::get('role', 'index')->name('role.index');
         // Route::get('role/create', 'create')->name('role.create');
-        // Route::post('role/store', 'store')->name('role.store');
-        // Route::get('role/{id}', 'show')->name('role.show');
-        // Route::get('role/{id}/edit', 'edit')->name('role.edit');
-        // Route::put('role/{id}', 'update')->name('role.update');
-        // Route::delete('role/delete/{id}', 'destroy')->name('role.destroy');
+        Route::post('role/store', 'store')->name('role.store');
+        Route::get('role/{id}', 'show')->name('role.show');
+        Route::get('role/{id}/edit', 'edit')->name('role.edit');
+        Route::put('role/{id}', 'update')->name('role.update');
+        Route::delete('role/delete/{id}', 'destroy')->name('role.destroy');
     });
 
     //
@@ -101,20 +116,6 @@ Route::prefix('dashboard')->name('dashboard.')->middleware(['auth'])->group(func
     //halaman detail touring aktif
     Route::get('/touring/detail', function () {
         return view('pages.admin.touring.detail-touring-aktif.index');
-    });
-
-    //halaman reminder document
-    Route::controller(ReminderDocument::class)->group(function () {
-        Route::get('reminder-document', 'index')->name('reminder-document.index');
-        Route::get('reminder-document/create', 'create')->name('reminder-document.create');
-        // Route::post('reminder-document/store', 'store')->name('reminder-document.store');
-        // Route::get('reminder-document/{id}', 'show')->name('reminder-document.show');
-        Route::get('reminder-document/{id}/edit', 'edit')->name('reminder-document.edit');
-        // Route::put('reminder-document/{id}', 'update')->name('reminder-document.update');
-        // Route::delete('reminder-document/delete/{id}', 'destroy')->name('reminder-document.destroy');
-    });
-    Route::get('/reminder-document/edit', function () {
-        return view('pages.admin.reminder.document.edit');
     });
 
     //halaman reminder sparepart

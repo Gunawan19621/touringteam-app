@@ -28,14 +28,18 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @php
+                        $no = 1;
+                    @endphp
                     @foreach ($roles as $role)
                         <tr id="role_{{ $role->id }}">
+                            <td>{{ $no++ }}</td>
                             <td>{{ $role->rolename }}</td>
                             <td>{{ $role->description }}</td>
                             <td>
-                                <button class="btn btn-success editrole" data-id="{{ $role->id }}">Edit</button>
-                                <button class="btn btn-danger deleterole" data-id="{{ $role->id }}">Delete</button>
-                                <button class="btn btn-info showrole" data-id="{{ $role->id }}">Show</button>
+                                <button class="btn btn-success editRole" data-id="{{ $role->id }}">Edit</button>
+                                <button class="btn btn-danger deleteRole" data-id="{{ $role->id }}">Delete</button>
+                                <button class="btn btn-info showRole" data-id="{{ $role->id }}">Show</button>
                             </td>
                         </tr>
                     @endforeach
@@ -45,7 +49,7 @@
     </div>
 
     <!-- Modal -->
-    @include('pages.admin.managemen-user.role.modal-user')
+    @include('pages.admin.managemen-user.role.modal-role')
 
     @include('pages.admin.managemen-user.role.script-table')
     {{-- --}}
