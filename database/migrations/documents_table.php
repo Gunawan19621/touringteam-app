@@ -15,8 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->date('expired');
-            $table->integer('duration');
-            $table->enum('duration_type', ['day', 'month', 'year']);
+            $table->integer('duration')->nullable();
+            $table->enum('duration_type', ['day', 'month', 'year'])->nullable();
+            $table->string('description')->nullable();
+            $table->integer('reminder')->nullable(); //untuk mengingatkan 10 hari / lebih sebelumnya
+            $table->enum('status_reminder', ['ignore', 'done'])->default('ignore'); // for ignore or done untuk pengingat ketika sudah di pilih done = iya atau sudah
             $table->timestamps();
         });
     }

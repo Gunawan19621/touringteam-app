@@ -13,11 +13,12 @@ return new class extends Migration
     {
         Schema::create('m_spareparts', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->decimal('est_price', 10, 2);
-            $table->integer('duration');
-            $table->integer('reminder'); // for reminder notif for example h-10
-            $table->enum('status-reminder', ['active', 'inactive'])->default('inactive'); // for ignore or done
+            $table->string('name'); // for name of sparepart (ganti oli, ganti ban, dll)
+            $table->decimal('est_price', 10, 2)->nullable(); // perkiraan harga sparepart
+            $table->integer('duration')->nullable(); // untuk durasi penggantian sparepart
+            $table->enum('duration_type', ['day', 'month', 'year'])->nullable();
+            $table->integer('reminder'); //untuk mengingatkan 10 hari / lebih sebelumnya
+            $table->enum('status_reminder', ['ignore', 'done'])->default('ignore'); // for ignore or done untuk pengingat ketika sudah di pilih done = iya atau sudah
             // $table->timestamp('reminder')->nullable();
             $table->timestamp('last_service')->nullable(); // for last replace or service
             $table->text('description')->nullable();

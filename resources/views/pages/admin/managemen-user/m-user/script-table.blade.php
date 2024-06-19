@@ -10,29 +10,33 @@
 
         // Create new user modal
         $('#createNewUser').click(function() {
-            $('#createSaveBtn').val("create-user");
-            $('#createUserForm').trigger("reset");
-            $('#createUserModal').modal('show');
+            $('#createSaveBtn').val("create-user"); // id button untuk simpan data
+            $('#createUserForm').trigger("reset"); // Mereset form input
+            $('#createUserModal').modal('show'); // Menampilkan modal Role
         });
         // Save created user
         $('#createSaveBtn').click(function(e) {
             e.preventDefault();
-            $(this).html('Sending..');
 
             $.ajax({
                 data: $('#createUserForm').serialize(),
                 url: "{{ route('dashboard.user.store') }}",
                 type: "POST",
                 dataType: 'json',
-                success: function(data) {
-                    $('#createUserForm').trigger("reset");
-                    $('#createUserModal').modal('hide');
-                    swalSwitch("successcreate");
-                },
-                error: function(data) {
-                    $('#createUserForm').trigger("reset");
-                    $('#createUserModal').modal('hide');
-                    swalSwitch("erorcreate");
+                success: function(response) {
+                    if (response.errors) {
+                        console.log(response.errors);
+                        $('.alert-danger').removeClass('d-none');
+                        $('.alert-danger').html("<ul>");
+
+                        $.each(response.errors, function(key, value) {
+                            $('.alert-danger').find('ul').append("<li>" + value +
+                                "</li>");
+                        });
+                        $('.alert-danger').append("</ul>");
+                    } else {
+                        handleResponse(response, "create");
+                    }
                 }
             });
         });
@@ -66,8 +70,6 @@
         // Save edited user
         $('#editSaveBtn').click(function(e) {
             e.preventDefault();
-            $(this).html('Sending..');
-
             var user_id = $('#edit_user_id').val();
 
             $.ajax({
@@ -75,17 +77,31 @@
                 url: "{{ route('dashboard.user.update', ':id') }}".replace(':id', user_id),
                 type: "PUT",
                 dataType: 'json',
-                success: function(data) {
-                    $('#editUserForm').trigger("reset");
-                    $('#editUserModal').modal('hide');
-                    swalSwitch("successedit");
-                },
-                error: function(data) {
-                    $('#editUserForm').trigger("reset");
-                    $('#editUserModal').modal('hide');
-                    swalSwitch("eroredit");
+                success: function(response) {
+                    if (response.errors) {
+                        console.log(response.errors);
+                        $('.alert-danger').removeClass('d-none');
+                        $('.alert-danger').html("<ul>");
+
+                        $.each(response.errors, function(key, value) {
+                            $('.alert-danger').find('ul').append("<li>" + value +
+                                "</li>");
+                        });
+                        $('.alert-danger').append("</ul>");
+                    } else {
+                        handleResponse(response, "edit");
+                    }
                 }
             });
+        });
+
+        // Reset modal ketika di close
+        $('#createUserModal, #editUserModal').on('hidden.bs.modal', function() {
+            $(this).find('form').trigger("reset"); // Mereset form input
+            $('.alert-danger').addClass('d-none'); // Sembunyikan alert error
+            $('.alert-danger').html(''); // Kosongkan konten alert error
+            $('.alert-success').addClass('d-none'); // Sembunyikan alert sukses
+            $('.alert-success').html(''); // Kosongkan konten alert sukses
         });
 
         // Delete user
@@ -97,10 +113,10 @@
                     type: "DELETE",
                     url: "{{ route('dashboard.user.destroy', '') }}/" + user_id,
                     success: function(data) {
-                        swalSwitch("successdelete");
+                        swalSwitch("successdelete", data.success);
                     },
                     error: function(data) {
-                        swalSwitch("erordelete");
+                        swalSwitch("erordelete", data.error);
                     }
                 });
             }
@@ -110,22 +126,45 @@
         $('body').on('click', '.showUser', function() {
             var user_id = $(this).data("id");
             $.get("{{ route('dashboard.user.index') }}" + '/' + user_id, function(data) {
-                alert('Username: ' + data.username + '\nNama Lengkap: ' + data.fullname +
-                    '\nKode Referral Anda: ' + data.kode + '\nEmail: ' + data.email +
-                    '\nNo. Telepon: ' + data.no_phone + '\nJenis Kelamin: ' + data.gender +
-                    '\nAlamat: ' + data.address + '\nPoin: ' + data.point + '\nAvatar: ' +
-                    data.avatar);
+                var username = data.username ? data.username : '-';
+                var fullname = data.fullname ? data.fullname : '-';
+                var kode = data.kode ? data.kode : '-';
+                var email = data.email ? data.email : '-';
+                var no_phone = data.no_phone ? data.no_phone : '-';
+                var gender = data.gender ? data.gender : '-';
+                var address = data.address ? data.address : '-';
+                var point = data.point ? data.point : '-';
+                var avatar = data.avatar ? data.avatar : '-';
+                alert('Username: ' + username + '\nNama Lengkap: ' + fullname +
+                    '\nKode Referral Anda: ' + kode + '\nEmail: ' + email +
+                    '\nNo. Telepon: ' + no_phone + '\nJenis Kelamin: ' + gender +
+                    '\nAlamat: ' + address + '\nPoin: ' + point + '\nAvatar: ' +
+                    avatar);
             });
         });
 
+        // Handle Response edit dan create
+        function handleResponse(response, action) {
+            if (response.success) {
+                if (action === "create") {
+                    $('#createUserForm').trigger("reset");
+                    $('#createUserModal').modal('hide');
+                } else if (action === "edit") {
+                    $('#editUserForm').trigger("reset");
+                    $('#editUserModal').modal('hide');
+                }
+                swalSwitch("success", response.success);
+            }
+        }
+
         // SweetAlert2 Switch Alert Function
-        function swalSwitch(action) {
+        function swalSwitch(action, message = '') {
             switch (action) {
-                // Proses Tambah / Create
-                case "successcreate":
+                // switch alert success create
+                case "success":
                     Swal.fire({
                         title: "Success!",
-                        text: "User Berhasil di Tambahkan!",
+                        text: message,
                         icon: "success",
                         confirmButtonColor: "#4a4fea",
                         confirmButtonText: "OK"
@@ -135,53 +174,12 @@
                         }
                     });
                     break;
-                case "erorcreate":
-                    Swal.fire({
-                        title: "Error!",
-                        text: "User Gagal di Tambahkan!",
-                        icon: "error",
-                        confirmButtonColor: "#4a4fea",
-                        confirmButtonText: "Coba Lagi"
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            location.reload();
-                        }
-                    });
-                    break;
 
-                    // Proses Edit
-                case "successedit":
-                    Swal.fire({
-                        title: "Success!",
-                        text: "User Berhasil di Update!",
-                        icon: "success",
-                        confirmButtonColor: "#4a4fea",
-                        confirmButtonText: "OK"
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            location.reload();
-                        }
-                    });
-                    break;
-                case "eroredit":
-                    Swal.fire({
-                        title: "Error!",
-                        text: "User Gagal di Update!",
-                        icon: "error",
-                        confirmButtonColor: "#4a4fea",
-                        confirmButtonText: "Coba Lagi"
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            location.reload();
-                        }
-                    });
-                    break;
-
-                    // Proses Delete
+                    // switch alert delete
                 case "successdelete":
                     Swal.fire({
                         title: "Success!",
-                        text: "User Berhasil di Hapus!",
+                        text: message,
                         icon: "success",
                         confirmButtonColor: "#4a4fea",
                         confirmButtonText: "OK"
@@ -194,16 +192,25 @@
                 case "erordelete":
                     Swal.fire({
                         title: "Error!",
-                        text: "User Gagal di Hapus!",
+                        text: message,
                         icon: "error",
                         confirmButtonColor: "#4a4fea",
                         confirmButtonText: "Coba Lagi"
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            location.reload();
-                        }
                     });
                     break;
+                    // case "erordelete":
+                    //     Swal.fire({
+                    //         title: "Error!",
+                    //         text: "Role Gagal di Hapus!",
+                    //         icon: "error",
+                    //         confirmButtonColor: "#4a4fea",
+                    //         confirmButtonText: "Coba Lagi"
+                    //     }).then((result) => {
+                    //         if (result.isConfirmed) {
+                    //             location.reload();
+                    //         }
+                    //     });
+                    //     break;
             }
         }
     });

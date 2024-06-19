@@ -13,7 +13,10 @@ class M_Document extends Model
         'name',
         'expired',
         'duration',
+        'description',
+        'reminder',
         'duration_type',
+        'status_reminder',
         'created_at',
         'updated_at',
     ];

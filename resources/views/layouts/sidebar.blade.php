@@ -3,7 +3,7 @@
     <div class="h-100" data-simplebar>
 
         <!-- User box -->
-        <div class="user-box text-center">
+        {{-- <div class="user-box text-center">
 
             <img src="{{ Auth::user()->profile_photo_path ? asset('storage/' . Auth::user()->profile_photo_path) : asset('assets/images/users/profile-default.png') }}"
                 alt="user-img" title="Mat Helme" class="rounded-circle img-thumbnail avatar-md">
@@ -57,7 +57,7 @@
                     </a>
                 </li>
             </ul>
-        </div>
+        </div> --}}
 
         <!--- Sidemenu -->
         <div id="sidebar-menu">
@@ -101,12 +101,7 @@
                         </ul>
                     </div>
                 </li>
-                {{-- <li>
-                    <a href="#">
-                        <i class="mdi mdi-map-marker-multiple"></i>
-                        <span> Touring </span>
-                    </a>
-                </li> --}}
+
                 <li>
                     <a href="#touring" data-bs-toggle="collapse">
                         <i class="mdi mdi-account-group"></i>
@@ -142,6 +137,7 @@
                         </ul>
                     </div>
                 </li>
+
                 <li>
                     <a href="#reminder" data-bs-toggle="collapse">
                         <i class="mdi mdi-reminder"></i>
@@ -161,6 +157,12 @@
                 </li>
 
                 <li>
+                    <a href="{{ route('dashboard.transportation.index') }}">
+                        <i class="mdi mdi-garage"></i>
+                        <span> Kendaraan </span>
+                    </a>
+                </li>
+                <li>
                     <a href="{{ route('chat') }}">
                         <i class="mdi mdi-forum-outline"></i>
                         <span> Chat </span>
@@ -168,6 +170,7 @@
                 </li>
 
                 <li class="menu-title mt-2">System</li>
+
                 <li>
                     <a href="#managemenuser" data-bs-toggle="collapse">
                         <i class="mdi mdi-account-cog"></i>
@@ -186,13 +189,8 @@
                     </div>
                 </li>
             </ul>
-
         </div>
-        <!-- End Sidebar -->
 
         <div class="clearfix"></div>
-
     </div>
-    <!-- Sidebar -left -->
-
 </div>

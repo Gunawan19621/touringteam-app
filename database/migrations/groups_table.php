@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('t_groups', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->text('description');
-            $table->enum('send-notif', ['pic', 'all'])->default('all'); // pic is lead group and can be more then 2
-            $table->integer('distance')->nullable(); // meter, for distance terpisah rombongan
+            $table->string('name'); // for name of group
+            $table->text('description')->nullable(); // for description of group
+            $table->enum('send_notif', ['pic', 'all'])->default('all'); // pic is lead group and can be more then 2 pic = ketua group
+            $table->integer('distance')->nullable(); // meter, for distance(jarak) terpisah rombongan dan ketika lebih dari jakar akan tersebar notif
             $table->timestamps();
         });
     }

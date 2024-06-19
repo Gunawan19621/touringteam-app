@@ -10,7 +10,7 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
-    {
+    { //  untuk penandaan area yang tidak boleh di datanginya / area yang harus di datanginya (bisa di bilang untuk rest area)
         Schema::create('t_group_areas', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('group_id');

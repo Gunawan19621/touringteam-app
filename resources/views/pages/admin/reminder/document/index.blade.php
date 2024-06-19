@@ -25,6 +25,7 @@
                         <th>Nama Dokumen</th>
                         <th>Masa Berlaku</th>
                         <th>Durasi</th>
+                        <th>Deskripsi</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -38,6 +39,7 @@
                             <td>{{ $document->name }}</td>
                             <td>{{ $document->expired }}</td>
                             <td>{{ $document->duration }} {{ $document->duration_type }}</td>
+                            <td>{{ $document->description }}</td>
                             <td>
                                 <button class="btn btn-success editDocument" data-id="{{ $document->id }}">Edit</button>
                                 <button class="btn btn-danger deleteDocument" data-id="{{ $document->id }}">Delete</button>

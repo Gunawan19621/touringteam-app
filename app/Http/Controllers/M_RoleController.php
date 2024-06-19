@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\M_Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 
 class M_RoleController extends Controller
 {
@@ -30,13 +31,24 @@ class M_RoleController extends Controller
      */
     public function store(Request $request)
     {
+        $validasi = Validator::make($request->all(), [
+            'rolename' => 'required',
+            'description' => '',
+        ], [
+            'rolename.required' => 'Nama Role harus diisi',
+        ]);
 
-        $role = new M_Role();
-        $role->rolename = $request->input('rolename');
-        $role->description = $request->input('description');
-        $role->save();
+        if ($validasi->fails()) {
+            return response()->json(['errors' => $validasi->errors()]);
+        } else {
+            $data = [
+                'rolename' => $request->rolename,
+                'description' => $request->description,
+            ];
 
-        return response()->json(['success' => true, 'message' => 'Proses tambah data berhasil!']);
+            M_Role::create($data);
+            return response()->json(['success' => "Data berhasil ditambahkan"]);
+        }
     }
 
     /**
@@ -62,25 +74,39 @@ class M_RoleController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $validatedData = $request->validate([
-            'rolename' => 'required|string|max:255',
-            'description' => 'nullable|string|max:255',
+        $validasi = Validator::make($request->all(), [
+            'rolename' => 'required',
+            'description' => '',
+        ], [
+            'rolename.required' => 'Nama Role harus diisi',
         ]);
 
-        $role = M_Role::findOrFail($id);
-        $role->update($validatedData);
+        if ($validasi->fails()) {
+            return response()->json(['errors' => $validasi->errors()]);
+        } else {
+            $data = [
+                'rolename' => $request->rolename,
+                'description' => $request->description,
+            ];
 
-        return response()->json($role);
+            M_Role::findOrFail($id)->update($data);
+            return response()->json(['success' => "Data berhasil di Update"]);
+        }
     }
-
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
-        $role = M_Role::find($id);
-        $role->delete();
-        return response()->json(['success' => 'Role deleted successfully']);
+        try {
+            $role = M_Role::findOrFail($id); // Menggunakan findOrFail untuk menangkap kesalahan jika data tidak ditemukan
+            $role->delete();
+
+            return response()->json(['success' => 'Data berhasil di hapus']);
+        } catch (\Exception $e) {
+            // Menangkap kesalahan dan mengembalikan pesan error
+            return response()->json(['error' => 'Data gagal di hapus'], 500);
+        }
     }
 }

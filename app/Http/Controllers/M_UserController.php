@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class M_UserController extends Controller
 {
@@ -29,27 +30,39 @@ class M_UserController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $validasi = Validator::make($request->all(), [
             'username' => 'required',
             'fullname' => 'required',
             'email' => 'required|email',
             'no_phone' => 'required',
             'password' => 'required'
+        ], [
+            'username.required' => 'Username harus diisi',
+            'fullname.required' => 'Nama lengkap harus diisi',
+            'email.required' => 'Email harus diisi',
+            'email.email' => 'Email tidak valid',
+            'no_phone.required' => 'Nomor telepon harus diisi',
+            'password.required' => 'Password harus diisi'
         ]);
 
-        // Generate random code with alphanumeric characters (6 characters long)
-        $randomCode = substr(str_shuffle(str_repeat('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', 6)), 0, 6);
+        if ($validasi->fails()) {
+            return response()->json(['errors' => $validasi->errors()]);
+        } else {
+            // Generate random code with alphanumeric characters (6 characters long)
+            $randomCode = substr(str_shuffle(str_repeat('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', 6)), 0, 6);
 
-        $user = new User();
-        $user->username = $request->input('username');
-        $user->fullname = $request->input('fullname');
-        $user->email = $request->input('email');
-        $user->no_phone = $request->input('no_phone');
-        $user->password = bcrypt($request->input('password')); // Remember to hash the password
-        $user->kode = $randomCode; // Assign the random code
-        $user->save();
+            $data = [
+                'username' => $request->username,
+                'fullname' => $request->fullname,
+                'email' => $request->email,
+                'no_phone' => $request->no_phone,
+                'password' => bcrypt($request->password),
+                'kode' => $randomCode,
+            ];
 
-        return response()->json(['success' => true, 'message' => 'Proses tambah data berhasil!']);
+            User::create($data);
+            return response()->json(['success' => "Data berhasil ditambahkan"]);
+        }
     }
 
     /**
@@ -76,18 +89,33 @@ class M_UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $validatedData = $request->validate([
-            'fullname' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-            'no_phone' => 'required|string|max:255',
-            'gender' => 'required|in:male,female,others',
-            'address' => 'required|string',
+        $validasi = Validator::make($request->all(), [
+            'fullname' => 'required',
+            'email' => 'required|email',
+            'no_phone' => 'required',
+            'gender' => 'nullable|in:male,female,others',
+            'address' => 'nullable',
+        ], [
+            'fullname.required' => 'Nama lengkap harus diisi',
+            'email.required' => 'Email harus diisi',
+            'email.email' => 'Email tidak valid',
+            'no_phone.required' => 'Nomor telepon harus diisi',
         ]);
 
-        $user = User::findOrFail($id);
-        $user->update($validatedData);
+        if ($validasi->fails()) {
+            return response()->json(['errors' => $validasi->errors()]);
+        } else {
+            $data = [
+                'fullname' => $request->fullname,
+                'email' => $request->email,
+                'no_phone' => $request->no_phone,
+                'gender' => $request->gender,
+                'address' => $request->address,
+            ];
 
-        return response()->json($user);
+            User::findOrFail($id)->update($data);
+            return response()->json(['success' => "Data berhasil di Update"]);
+        }
     }
 
 
@@ -96,8 +124,14 @@ class M_UserController extends Controller
      */
     public function destroy(string $id)
     {
-        $user = User::find($id);
-        $user->delete();
-        return response()->json(['success' => 'User deleted successfully']);
+        try {
+            $user = User::findOrFail($id); // Menggunakan findOrFail untuk menangkap kesalahan jika data tidak ditemukan
+            $user->delete();
+
+            return response()->json(['success' => 'Data berhasil di hapus']);
+        } catch (\Exception $e) {
+            // Menangkap kesalahan dan mengembalikan pesan error
+            return response()->json(['error' => 'Data gagal di hapus'], 500);
+        }
     }
 }

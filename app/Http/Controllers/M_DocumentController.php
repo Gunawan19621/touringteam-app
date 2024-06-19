@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\M_Document;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class M_DocumentController extends Controller
 {
@@ -16,36 +17,47 @@ class M_DocumentController extends Controller
         return view('pages.admin.reminder.document.index', compact('documents'));
     }
 
-    // /**
-    //  * Show the form for creating a new resource.
-    //  */
-    // public function create()
-    // {
-    //     //
-    // }
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        //
+    }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'expired' => 'required|date',
-            'duration' => 'required|integer',
-            'duration_type' => 'required|in:day,month,year'
+        $validasi = Validator::make($request->all(), [
+            'name' => 'required',
+            'expired' => 'required',
+            'duration' => '',
+            'duration_type' => '',
+            'description' => '',
+            'reminder' => '',
+        ], [
+            'name.required' => 'Nama Dokumen harus diisi',
+            'expired.required' => 'Tanggal Kadaluarsa harus diisi',
         ]);
 
-        $document = new M_Document();
-        $document->name = $validatedData['name'];
-        $document->expired = $validatedData['expired'];
-        $document->duration = $validatedData['duration'];
-        $document->duration_type = $validatedData['duration_type'];
-        $document->save();
+        if ($validasi->fails()) {
+            return response()->json(['errors' => $validasi->errors()]);
+        } else {
+            $data = [
+                'name' => $request->name,
+                'expired' => $request->expired,
+                'duration' => $request->duration,
+                'duration_type' => $request->duration_type,
+                'description' => $request->description,
+                'reminder' => $request->reminder,
+            ];
 
-        return response()->json(['success' => true, 'message' => 'Proses tambah data berhasil!']);
+            M_Document::create($data);
+            return response()->json(['success' => "Data berhasil ditambahkan"]);
+        }
     }
-
 
     /**
      * Display the specified resource.
@@ -65,40 +77,38 @@ class M_DocumentController extends Controller
         return response()->json($document);
     }
 
-    // /**
-    //  * Update the specified resource in storage.
-    //  */
-    // public function update(Request $request, string $id)
-    // {
-    //     dd($request->all());
-    //     $validatedData = $request->validate([
-    //         'name' => 'required|string|max:255',
-    //         'expired' => 'required|date',
-    //         'duration' => 'required|integer',
-    //         'duration_type' => 'required|in:day,month,year'
-    //     ]);
-
-    //     $document = M_Document::findOrFail($id);
-    //     $document->update($validatedData);
-
-    //     return response()->json($document);
-    // }
+    /**
+     * Update the specified resource in storage.
+     */
     public function update(Request $request, string $id)
     {
-        // Validate the request data
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'expired' => 'required|date',
-            'duration' => 'required|integer',
-            'duration_type' => 'required|in:day,month,year'
+        $validasi = Validator::make($request->all(), [
+            'name' => 'required',
+            'expired' => 'required',
+            'duration' => '',
+            'duration_type' => '',
+            'description' => '',
+            'reminder' => '',
+        ], [
+            'name.required' => 'Nama Dokumen harus diisi',
+            'expired.required' => 'Tanggal Kadaluarsa harus diisi',
         ]);
 
-        // Find the document by ID and update it
-        $document = M_Document::findOrFail($id);
-        $document->update($validatedData);
+        if ($validasi->fails()) {
+            return response()->json(['errors' => $validasi->errors()]);
+        } else {
+            $data = [
+                'name' => $request->name,
+                'expired' => $request->expired,
+                'duration' => $request->duration,
+                'duration_type' => $request->duration_type,
+                'description' => $request->description,
+                'reminder' => $request->reminder,
+            ];
 
-        // Return the updated document as JSON response
-        return response()->json($document);
+            M_Document::findOrFail($id)->update($data);
+            return response()->json(['success' => "Data berhasil di Update"]);
+        }
     }
 
 
@@ -108,8 +118,14 @@ class M_DocumentController extends Controller
      */
     public function destroy(string $id)
     {
-        $document = M_Document::find($id);
-        $document->delete();
-        return response()->json(['success' => 'Document deleted successfully']);
+        try {
+            $document = M_Document::findOrFail($id); // Menggunakan findOrFail untuk menangkap kesalahan jika data tidak ditemukan
+            $document->delete();
+
+            return response()->json(['success' => 'Data berhasil di hapus']);
+        } catch (\Exception $e) {
+            // Menangkap kesalahan dan mengembalikan pesan error
+            return response()->json(['error' => 'Data gagal di hapus'], 500);
+        }
     }
 }

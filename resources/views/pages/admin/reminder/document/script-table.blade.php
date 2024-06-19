@@ -10,51 +10,37 @@
 
         // Create new Document modal
         $('#createNewDocument').click(function() {
-            $('#createSaveBtn').val("create-document");
-            $('#createDocumentForm').trigger("reset");
-            $('#createDocumentModal').modal('show');
+            $('#createSaveBtn').val("create-document"); // id button untuk simpan data
+            $('#createDocumentForm').trigger("reset"); // Mereset form input
+            $('#createDocumentModal').modal('show'); // Menampilkan modal Role
         });
         // Save created Document
         $('#createSaveBtn').click(function(e) {
             e.preventDefault();
-            $(this).html('Sending..');
 
             $.ajax({
                 data: $('#createDocumentForm').serialize(),
                 url: "{{ route('dashboard.document.store') }}",
                 type: "POST",
                 dataType: 'json',
-                success: function(data) {
-                    $('#createDocumentForm').trigger("reset");
-                    $('#createDocumentModal').modal('hide');
-                    swalSwitch("successcreate");
-                },
-                error: function(data) {
-                    $('#createDocumentForm').trigger("reset");
-                    $('#createDocumentModal').modal('hide');
-                    swalSwitch("erorcreate");
+                success: function(response) {
+                    if (response.errors) {
+                        console.log(response.errors);
+                        $('.alert-danger').removeClass('d-none');
+                        $('.alert-danger').html("<ul>");
+
+                        $.each(response.errors, function(key, value) {
+                            $('.alert-danger').find('ul').append("<li>" + value +
+                                "</li>");
+                        });
+                        $('.alert-danger').append("</ul>");
+                    } else {
+                        handleResponse(response, "create");
+                    }
                 }
             });
         });
 
-        // Edit Document modal
-        // $('body').on('click', '.editDocument', function() {
-        //     var document_id = $(this).data('id');
-        //     $.get("{{ route('dashboard.document.index') }}" + '/' + document_id + '/edit', function(
-        //         data) {
-        //         console.log(data);
-        //         $('#editDocumentModal').modal('show');
-        //         $('#edit_document_id').val(data.id);
-        //         $('#edit_name').val(data.name);
-        //         $('#edit_expired').val(data.expired);
-        //         $('#edit_duration').val(data.duration);
-        //         if (data.duration_type) {
-        //             $('#edit_duration_type').val(data.duration_type);
-        //         } else {
-        //             $('#edit_duration_type').val('');
-        //         }
-        //     });
-        // });
         // Edit Document modal
         $('body').on('click', '.editDocument', function() {
             var document_id = $(this).data('id');
@@ -67,72 +53,61 @@
                 $('#edit_expired').val(data.expired);
                 $('#edit_duration').val(data.duration);
                 $('#edit_duration_type').val(data.duration_type || '');
+                $('#edit_description').val(data.description);
+                $('#edit_reminder').val(data.reminder);
             });
         });
-
-
-        // // Save edited Document
-        // $('#editSaveBtn').click(function(e) {
-        //     e.preventDefault();
-        //     $(this).html('Sending..');
-        //     var document_id = $('#edit_document_id').val();
-        //     $.ajax({
-        //         data: $('#editDocumentForm').serialize(),
-        //         url: "{{ route('dashboard.document.update', ':id') }}".replace(':id',
-        //             document_id),
-        //         type: "PUT",
-        //         dataType: 'json',
-        //         success: function(data) {
-        //             $('#editDocumentForm').trigger("reset");
-        //             $('#editDocumentModal').modal('hide');
-        //             swalSwitch("successedit");
-        //         },
-        //         error: function(data) {
-        //             $('#editDocumentForm').trigger("reset");
-        //             $('#editDocumentModal').modal('hide');
-        //             swalSwitch("eroredit");
-        //         }
-        //     });
-        // });
         // Save edited Document
         $('#editSaveBtn').click(function(e) {
             e.preventDefault();
-            $(this).html('Sending..');
             var document_id = $('#edit_document_id').val();
+
             $.ajax({
                 data: $('#editDocumentForm').serialize(),
                 url: "{{ route('dashboard.document.update', ':id') }}".replace(':id',
                     document_id),
                 type: "PUT",
                 dataType: 'json',
-                success: function(data) {
-                    $('#editDocumentForm').trigger("reset");
-                    $('#editDocumentModal').modal('hide');
-                    swalSwitch("successedit");
-                    $(this).html('Simpan');
-                },
-                error: function(data) {
-                    $('#editDocumentForm').trigger("reset");
-                    $('#editDocumentModal').modal('hide');
-                    swalSwitch("eroredit");
-                    $(this).html('Simpan');
+                success: function(response) {
+                    if (response.errors) {
+                        console.log(response.errors);
+                        $('.alert-danger').removeClass('d-none');
+                        $('.alert-danger').html("<ul>");
+
+                        $.each(response.errors, function(key, value) {
+                            $('.alert-danger').find('ul').append("<li>" + value +
+                                "</li>");
+                        });
+                        $('.alert-danger').append("</ul>");
+                    } else {
+                        handleResponse(response, "edit");
+                    }
                 }
             });
         });
 
+        // Reset modal ketika di close
+        $('#createDocumentModal, #editDocumentModal').on('hidden.bs.modal', function() {
+            $(this).find('form').trigger("reset"); // Mereset form input
+            $('.alert-danger').addClass('d-none'); // Sembunyikan alert error
+            $('.alert-danger').html(''); // Kosongkan konten alert error
+            $('.alert-success').addClass('d-none'); // Sembunyikan alert sukses
+            $('.alert-success').html(''); // Kosongkan konten alert sukses
+        });
 
         // Delete Document
         $('body').on('click', '.deleteDocument', function() {
             var document_id = $(this).data("id");
+
             if (confirm("Apakah anda yakin ingin di hapus!")) {
                 $.ajax({
                     type: "DELETE",
                     url: "{{ route('dashboard.document.destroy', '') }}/" + document_id,
                     success: function(data) {
-                        swalSwitch("successdelete");
+                        swalSwitch("successdelete", data.success);
                     },
                     error: function(data) {
-                        swalSwitch("erordelete");
+                        swalSwitch("erordelete", data.error);
                     }
                 });
             }
@@ -142,23 +117,46 @@
         $('body').on('click', '.showDocument', function() {
             var document_id = $(this).data("id");
             $.get("{{ route('dashboard.document.index') }}" + '/' + document_id, function(data) {
-                var duration = data.duration + ' ' + (data.duration_type === 'day' ? 'Hari' :
-                    (data.duration_type === 'month' ? 'Bulan' :
-                        (data.duration_type === 'year' ? 'Tahun' : '')));
-                alert('Nama Dokumen : ' + data.name + '\nExpired : ' + data.expired +
-                    '\nDurasi : ' + duration);
+                var name = data.name ? data.name : '-';
+                var expired = data.expired ? data.expired : '-';
+                var duration = data.duration ? data.duration : '-';
+                var duration_type = data.duration_type ? data.duration_type : '-';
+                var reminder = data.reminder ? data.reminder : '-';
+                var description = data.description ? data.description : '-';
+
+                if (duration_type !== '-') {
+                    duration += ' ' + (duration_type === 'day' ? 'Hari' :
+                        (duration_type === 'month' ? 'Bulan' :
+                            (duration_type === 'year' ? 'Tahun' : '')));
+                }
+
+                alert('Nama Dokumen : ' + name + '\nExpired : ' + expired + '\nDurasi : ' +
+                    duration + '\nPengingat : ' + reminder + '\nDeskripsi : ' + description);
             });
         });
 
+        // Handle Response edit dan create
+        function handleResponse(response, action) {
+            if (response.success) {
+                if (action === "create") {
+                    $('#createDocumentForm').trigger("reset");
+                    $('#createDocumentModal').modal('hide');
+                } else if (action === "edit") {
+                    $('#editDocumentForm').trigger("reset");
+                    $('#editDocumentModal').modal('hide');
+                }
+                swalSwitch("success", response.success);
+            }
+        }
 
         // SweetAlert2 Switch Alert Function
-        function swalSwitch(action) {
+        function swalSwitch(action, message = '') {
             switch (action) {
-                // Proses Tambah / Create
-                case "successcreate":
+                // switch alert success create
+                case "success":
                     Swal.fire({
                         title: "Success!",
-                        text: "Document Berhasil di Tambahkan!",
+                        text: message,
                         icon: "success",
                         confirmButtonColor: "#4a4fea",
                         confirmButtonText: "OK"
@@ -168,53 +166,12 @@
                         }
                     });
                     break;
-                case "erorcreate":
-                    Swal.fire({
-                        title: "Error!",
-                        text: "Document Gagal di Tambahkan!",
-                        icon: "error",
-                        confirmButtonColor: "#4a4fea",
-                        confirmButtonText: "Coba Lagi"
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            location.reload();
-                        }
-                    });
-                    break;
 
-                    // Proses Edit
-                case "successedit":
-                    Swal.fire({
-                        title: "Success!",
-                        text: "Document Berhasil di Update!",
-                        icon: "success",
-                        confirmButtonColor: "#4a4fea",
-                        confirmButtonText: "OK"
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            location.reload();
-                        }
-                    });
-                    break;
-                case "eroredit":
-                    Swal.fire({
-                        title: "Error!",
-                        text: "Document Gagal di Update!",
-                        icon: "error",
-                        confirmButtonColor: "#4a4fea",
-                        confirmButtonText: "Coba Lagi"
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            location.reload();
-                        }
-                    });
-                    break;
-
-                    // Proses Delete
+                    // switch alert delete
                 case "successdelete":
                     Swal.fire({
                         title: "Success!",
-                        text: "Document Berhasil di Hapus!",
+                        text: message,
                         icon: "success",
                         confirmButtonColor: "#4a4fea",
                         confirmButtonText: "OK"
@@ -227,14 +184,10 @@
                 case "erordelete":
                     Swal.fire({
                         title: "Error!",
-                        text: "Document Gagal di Hapus!",
+                        text: message,
                         icon: "error",
                         confirmButtonColor: "#4a4fea",
                         confirmButtonText: "Coba Lagi"
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            location.reload();
-                        }
                     });
                     break;
             }

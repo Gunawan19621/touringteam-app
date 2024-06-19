@@ -13,11 +13,13 @@ return new class extends Migration
     {
         Schema::create('m_transportations', function (Blueprint $table) {
             $table->id();
-            $table->string('type');
-            $table->string('name');
-            $table->string('machine');
-            $table->integer('thn_beli');
-            $table->integer('thn_rakit');
+            $table->string('type'); // untuk tipe motor, mobil, speda, dll
+            $table->string('name');  // untuk nama kendaraan controh supra 110
+            $table->string('machine')->nullable(); // untuk untuk kendaraan honda, yamaha, dll
+            $table->integer('thn_beli')->nullable();
+            $table->integer('thn_rakit')->nullable();
+            $table->string('plat_no')->nullable();
+            $table->string('foto_kendaraan')->nullable();
             $table->text('description')->nullable();
             $table->timestamps();
         });

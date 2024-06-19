@@ -15,7 +15,8 @@ use App\Http\Controllers\ReminderDocument;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    // return view('welcome');
+    return view('landing-page.index');
 });
 
 Route::middleware([
@@ -40,13 +41,8 @@ Route::middleware([
 Route::prefix('dashboard')->name('dashboard.')->middleware(['auth'])->group(function () {
     //halaman profile
     Route::controller(App\Http\Controllers\ProfileController::class)->group(function () {
-        // Route::get('profile', 'index')->name('profile.index');
-        // Route::get('profile/create', 'create')->name('profile.create');
-        // Route::post('profile/store', 'store')->name('profile.store');
         Route::get('profile', 'show')->name('profile.show');
-        // Route::get('profile/{id}/edit', 'edit')->name('profile.edit');
         Route::put('profile/{id}', 'update')->name('profile.update');
-        // Route::delete('profile/delete/{id}', 'destroy')->name('profile.destroy');
         Route::post('profile/{id}/upload-photo', 'uploadPhoto')->name('profile.uploadPhoto');
         Route::delete('profile/{id}/delete-photo', 'deletePhoto')->name('profile.deletePhoto');
         Route::put('profile/{id}/update-password', 'updatePassword')->name('profile.updatePassword');
@@ -56,7 +52,6 @@ Route::prefix('dashboard')->name('dashboard.')->middleware(['auth'])->group(func
     //Halaman Reminder Document
     Route::controller(App\Http\Controllers\M_DocumentController::class)->group(function () {
         Route::get('document', 'index')->name('document.index');
-        // Route::get('document/create', 'create')->name('document.create');
         Route::post('document/store', 'store')->name('document.store');
         Route::get('document/{id}', 'show')->name('document.show');
         Route::get('document/{id}/edit', 'edit')->name('document.edit');
@@ -66,11 +61,22 @@ Route::prefix('dashboard')->name('dashboard.')->middleware(['auth'])->group(func
 
     //Halaman Reminder Sparepart
 
+    //Halaman Transportation
+    Route::controller(App\Http\Controllers\M_TransportationController::class)->group(function () {
+        Route::get('transportation', 'index')->name('transportation.index');
+        // Route::get('transportation/create', 'create')->name('transportation.create');
+        Route::post('transportation/store', 'store')->name('transportation.store');
+        Route::get('transportation/{id}', 'show')->name('transportation.show');
+        Route::get('transportation/{id}/edit', 'edit')->name('transportation.edit');
+        Route::put('transportation/{id}', 'update')->name('transportation.update');
+        Route::delete('transportation/delete/{id}', 'destroy')->name('transportation.destroy');
+    });
+
+
     //System
     //halaman Managemen User
     Route::controller(App\Http\Controllers\M_UserController::class)->group(function () {
         Route::get('user', 'index')->name('user.index');
-        // Route::get('user/create', 'create')->name('user.create');
         Route::post('user/store', 'store')->name('user.store');
         Route::get('user/{id}', 'show')->name('user.show');
         Route::get('user/{id}/edit', 'edit')->name('user.edit');

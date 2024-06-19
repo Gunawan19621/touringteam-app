@@ -10,29 +10,33 @@
 
         // Create new role modal
         $('#createNewRole').click(function() {
-            $('#createSaveBtn').val("create-role");
-            $('#createRoleForm').trigger("reset");
-            $('#createRoleModal').modal('show');
+            $('#createSaveBtn').val("create-role"); // id button untuk simpan data
+            $('#createRoleForm').trigger("reset"); // Mereset form input
+            $('#createRoleModal').modal('show'); // Menampilkan modal Role
         });
         // Save created Role
         $('#createSaveBtn').click(function(e) {
             e.preventDefault();
-            $(this).html('Sending..');
 
             $.ajax({
                 data: $('#createRoleForm').serialize(),
                 url: "{{ route('dashboard.role.store') }}",
                 type: "POST",
                 dataType: 'json',
-                success: function(data) {
-                    $('#createRoleForm').trigger("reset");
-                    $('#createRoleModal').modal('hide');
-                    swalSwitch("successcreate");
-                },
-                error: function(data) {
-                    $('#createRoleForm').trigger("reset");
-                    $('#createRoleModal').modal('hide');
-                    swalSwitch("erorcreate");
+                success: function(response) {
+                    if (response.errors) {
+                        console.log(response.errors);
+                        $('.alert-danger').removeClass('d-none');
+                        $('.alert-danger').html("<ul>");
+
+                        $.each(response.errors, function(key, value) {
+                            $('.alert-danger').find('ul').append("<li>" + value +
+                                "</li>");
+                        });
+                        $('.alert-danger').append("</ul>");
+                    } else {
+                        handleResponse(response, "create");
+                    }
                 }
             });
         });
@@ -41,9 +45,7 @@
         $('body').on('click', '.editRole', function() {
             var role_id = $(this).data('id');
             $.get("{{ route('dashboard.role.index') }}" + '/' + role_id + '/edit', function(data) {
-                console.log(
-                    data
-                );
+                console.log(data);
                 $('#editRoleModal').modal('show');
                 $('#edit_role_id').val(data.id);
                 $('#edit_rolename').val(data.rolename);
@@ -53,8 +55,6 @@
         // Save edited Role
         $('#editSaveBtn').click(function(e) {
             e.preventDefault();
-            $(this).html('Sending..');
-
             var role_id = $('#edit_role_id').val();
 
             $.ajax({
@@ -62,17 +62,31 @@
                 url: "{{ route('dashboard.role.update', ':id') }}".replace(':id', role_id),
                 type: "PUT",
                 dataType: 'json',
-                success: function(data) {
-                    $('#editRoleForm').trigger("reset");
-                    $('#editRoleModal').modal('hide');
-                    swalSwitch("successedit");
-                },
-                error: function(data) {
-                    $('#editRoleForm').trigger("reset");
-                    $('#editRoleModal').modal('hide');
-                    swalSwitch("eroredit");
+                success: function(response) {
+                    if (response.errors) {
+                        console.log(response.errors);
+                        $('.alert-danger').removeClass('d-none');
+                        $('.alert-danger').html("<ul>");
+
+                        $.each(response.errors, function(key, value) {
+                            $('.alert-danger').find('ul').append("<li>" + value +
+                                "</li>");
+                        });
+                        $('.alert-danger').append("</ul>");
+                    } else {
+                        handleResponse(response, "edit");
+                    }
                 }
             });
+        });
+
+        // Reset modal ketika di close
+        $('#createRoleModal, #editRoleModal').on('hidden.bs.modal', function() {
+            $(this).find('form').trigger("reset"); // Mereset form input
+            $('.alert-danger').addClass('d-none'); // Sembunyikan alert error
+            $('.alert-danger').html(''); // Kosongkan konten alert error
+            $('.alert-success').addClass('d-none'); // Sembunyikan alert sukses
+            $('.alert-success').html(''); // Kosongkan konten alert sukses
         });
 
         // Delete Role
@@ -84,10 +98,10 @@
                     type: "DELETE",
                     url: "{{ route('dashboard.role.destroy', '') }}/" + role_id,
                     success: function(data) {
-                        swalSwitch("successdelete");
+                        swalSwitch("successdelete", data.success);
                     },
                     error: function(data) {
-                        swalSwitch("erordelete");
+                        swalSwitch("erordelete", data.error);
                     }
                 });
             }
@@ -97,18 +111,34 @@
         $('body').on('click', '.showRole', function() {
             var role_id = $(this).data("id");
             $.get("{{ route('dashboard.role.index') }}" + '/' + role_id, function(data) {
-                alert('Rolename : ' + data.rolename + '\nDescription : ' + data.description);
+                var rolename = data.rolename ? data.rolename : '-';
+                var description = data.description ? data.description : '-';
+                alert('Rolename : ' + rolename + '\nDescription : ' + description);
             });
         });
 
+        // Handle Response edit dan create
+        function handleResponse(response, action) {
+            if (response.success) {
+                if (action === "create") {
+                    $('#createRoleForm').trigger("reset");
+                    $('#createRoleModal').modal('hide');
+                } else if (action === "edit") {
+                    $('#editRoleForm').trigger("reset");
+                    $('#editRoleModal').modal('hide');
+                }
+                swalSwitch("success", response.success);
+            }
+        }
+
         // SweetAlert2 Switch Alert Function
-        function swalSwitch(action) {
+        function swalSwitch(action, message = '') {
             switch (action) {
-                // Proses Tambah / Create
-                case "successcreate":
+                // switch alert success create
+                case "success":
                     Swal.fire({
                         title: "Success!",
-                        text: "ROle Berhasil di Tambahkan!",
+                        text: message,
                         icon: "success",
                         confirmButtonColor: "#4a4fea",
                         confirmButtonText: "OK"
@@ -118,53 +148,12 @@
                         }
                     });
                     break;
-                case "erorcreate":
-                    Swal.fire({
-                        title: "Error!",
-                        text: "Role Gagal di Tambahkan!",
-                        icon: "error",
-                        confirmButtonColor: "#4a4fea",
-                        confirmButtonText: "Coba Lagi"
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            location.reload();
-                        }
-                    });
-                    break;
 
-                    // Proses Edit
-                case "successedit":
-                    Swal.fire({
-                        title: "Success!",
-                        text: "Role Berhasil di Update!",
-                        icon: "success",
-                        confirmButtonColor: "#4a4fea",
-                        confirmButtonText: "OK"
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            location.reload();
-                        }
-                    });
-                    break;
-                case "eroredit":
-                    Swal.fire({
-                        title: "Error!",
-                        text: "Role Gagal di Update!",
-                        icon: "error",
-                        confirmButtonColor: "#4a4fea",
-                        confirmButtonText: "Coba Lagi"
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            location.reload();
-                        }
-                    });
-                    break;
-
-                    // Proses Delete
+                    // switch alert delete
                 case "successdelete":
                     Swal.fire({
                         title: "Success!",
-                        text: "Role Berhasil di Hapus!",
+                        text: message,
                         icon: "success",
                         confirmButtonColor: "#4a4fea",
                         confirmButtonText: "OK"
@@ -177,14 +166,10 @@
                 case "erordelete":
                     Swal.fire({
                         title: "Error!",
-                        text: "Role Gagal di Hapus!",
+                        text: message,
                         icon: "error",
                         confirmButtonColor: "#4a4fea",
                         confirmButtonText: "Coba Lagi"
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            location.reload();
-                        }
                     });
                     break;
             }
