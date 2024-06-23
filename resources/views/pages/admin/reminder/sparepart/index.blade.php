@@ -12,8 +12,7 @@
         <div class="container-fluid">
             <span class="navbar-brand h1">List Sparepart</span>
             <div class="d-flex">
-                <a href="{{ url('/dashboard/reminder-sparepart/create') }}"
-                    class="btn btn-purple rounded-pill w-md waves-effect waves-light mb-2">Tambah Sparepart</a>
+                <button id="createNewSparepart" class="btn btn-success">Tambah Sparepart</button>
             </div>
         </div>
     </nav>
@@ -22,40 +21,44 @@
             <table id="datatable" class="table table-bordered dt-responsive table-responsive nowrap">
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Position</th>
-                        <th>Office</th>
-                        <th>Age</th>
-                        <th>Start date</th>
+                        <th>No</th>
+                        <th>Nama Sparepart</th>
+                        <th>Terahir Service</th>
+                        <th>Harga</th>
+                        <th>Status</th>
                         <th style="width: 200px;">Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @for ($i = 0; $i < 15; $i++)
+                    @php
+                        $no = 1;
+                    @endphp
+                    @foreach ($sparepart as $item)
                         <tr>
-                            <td>Bruno Nash</td>
-                            <td>Software Engineer</td>
-                            <td>London</td>
-                            <td>38</td>
-                            <td>2011/05/03</td>
-                            <td style="width: 200px;">
-                                <div class="button-list">
-                                    <button type="button" class="btn btn-success waves-effect waves-light"><i
-                                            class="mdi mdi-lead-pencil"></i></button>
-                                    <button type="button" class="btn btn-danger waves-effect waves-light"><i
-                                            class="mdi mdi-delete"></i></button>
-                                    <button type="button" class="btn btn-info waves-effect waves-light"><i
-                                            class="mdi mdi-eye"></i></button>
-                                    <button type="button" class="btn btn-info waves-effect waves-light"
-                                        id="sa-params">contoh</button>
-                                </div>
+                            <td>{{ $no++ }}</td>
+                            <td>{{ $item->name }}</td>
+                            <td>{{ $item->last_service }}</td>
+                            <td>{{ $item->est_price }}</td>
+                            <td>{{ $item->status_reminder }}</td>
+                            <td>
+                                <button class="btn btn-success editSparepart" data-id="{{ $item->id }}">Edit</button>
+                                <button class="btn btn-danger deleteSparepart" data-id="{{ $item->id }}">Delete</button>
+                                <button class="btn btn-info showSparepart" data-id="{{ $item->id }}">Show</button>
+                                <button type="button" class="btn btn-info waves-effect waves-light"
+                                    id="sa-params">contoh</button>
                             </td>
                         </tr>
-                    @endfor
+                    @endforeach
                 </tbody>
             </table>
         </div>
     </div>
+
+    <!-- Modal -->
+    @include('pages.admin.reminder.sparepart.modal-sparepart')
+
+    <!-- Script -->
+    @include('pages.admin.reminder.sparepart.script-table')
 
     <script>
         document.getElementById("sa-params").addEventListener("click", function() {

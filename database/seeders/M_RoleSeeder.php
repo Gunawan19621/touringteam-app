@@ -17,9 +17,15 @@ class M_RoleSeeder extends Seeder
             'rolename' => 'admin',
             'description' => 'Administrator',
         ]);
-        M_Role::create([
-            'rolename' => 'user',
-            'description' => 'Regular User',
-        ]);
+
+        // Menyisipkan beberapa data pengguna biasa menggunakan loop
+        for ($i = 1; $i <= 4; $i++) {
+            M_Role::create([
+                'rolename' => 'user' . $i,
+                'description' => 'Regular User' . $i,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
     }
 }

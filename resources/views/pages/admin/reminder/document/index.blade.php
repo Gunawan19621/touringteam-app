@@ -55,7 +55,7 @@
     <!-- Modal -->
     @include('pages.admin.reminder.document.modal-document')
 
+    <!-- Script -->
     @include('pages.admin.reminder.document.script-table')
-    {{-- --}}
 
 @endsection

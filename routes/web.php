@@ -49,6 +49,18 @@ Route::prefix('dashboard')->name('dashboard.')->middleware(['auth'])->group(func
     });
 
     //Menu
+    //Halaman Komunitas
+    //Halaman Group Touring
+    Route::controller(App\Http\Controllers\T_GroupController::class)->group(function () {
+        Route::get('group-touring', 'index')->name('group-touring.index');
+        // Route::get('group-touring/create', 'create')->name('group-touring.create');
+        Route::post('group-touring/store', 'store')->name('group-touring.store');
+        Route::get('group-touring/{id}', 'show')->name('group-touring.show');
+        Route::get('group-touring/{id}/edit', 'edit')->name('group-touring.edit');
+        Route::put('group-touring/{id}', 'update')->name('group-touring.update');
+        Route::delete('group-touring/delete/{id}', 'destroy')->name('group-touring.destroy');
+    });
+
     //Halaman Reminder Document
     Route::controller(App\Http\Controllers\M_DocumentController::class)->group(function () {
         Route::get('document', 'index')->name('document.index');
@@ -60,18 +72,24 @@ Route::prefix('dashboard')->name('dashboard.')->middleware(['auth'])->group(func
     });
 
     //Halaman Reminder Sparepart
+    Route::controller(App\Http\Controllers\M_SparepartController::class)->group(function () {
+        Route::get('sparepart', 'index')->name('sparepart.index');
+        Route::post('sparepart/store', 'store')->name('sparepart.store');
+        Route::get('sparepart/{id}', 'show')->name('sparepart.show');
+        Route::get('sparepart/{id}/edit', 'edit')->name('sparepart.edit');
+        Route::put('sparepart/{id}', 'update')->name('sparepart.update');
+        Route::delete('sparepart/delete/{id}', 'destroy')->name('sparepart.destroy');
+    });
 
     //Halaman Transportation
     Route::controller(App\Http\Controllers\M_TransportationController::class)->group(function () {
         Route::get('transportation', 'index')->name('transportation.index');
-        // Route::get('transportation/create', 'create')->name('transportation.create');
         Route::post('transportation/store', 'store')->name('transportation.store');
         Route::get('transportation/{id}', 'show')->name('transportation.show');
         Route::get('transportation/{id}/edit', 'edit')->name('transportation.edit');
         Route::put('transportation/{id}', 'update')->name('transportation.update');
         Route::delete('transportation/delete/{id}', 'destroy')->name('transportation.destroy');
     });
-
 
     //System
     //halaman Managemen User
@@ -87,7 +105,6 @@ Route::prefix('dashboard')->name('dashboard.')->middleware(['auth'])->group(func
     //halaman Managemen role
     Route::controller(App\Http\Controllers\M_RoleController::class)->group(function () {
         Route::get('role', 'index')->name('role.index');
-        // Route::get('role/create', 'create')->name('role.create');
         Route::post('role/store', 'store')->name('role.store');
         Route::get('role/{id}', 'show')->name('role.show');
         Route::get('role/{id}/edit', 'edit')->name('role.edit');
@@ -106,32 +123,5 @@ Route::prefix('dashboard')->name('dashboard.')->middleware(['auth'])->group(func
     });
     Route::get('/community/create', function () {
         return view('pages.admin.community.create');
-    });
-
-    //halaman Touring
-    Route::get('/touring', function () {
-        return view('pages.admin.touring.index');
-    });
-    Route::get('/touring/create', function () {
-        return view('pages.admin.touring.create');
-    });
-    Route::get('/touring/history', function () {
-        return view('pages.admin.touring.history');
-    });
-
-    //halaman detail touring aktif
-    Route::get('/touring/detail', function () {
-        return view('pages.admin.touring.detail-touring-aktif.index');
-    });
-
-    //halaman reminder sparepart
-    Route::get('/reminder-sparepart', function () {
-        return view('pages.admin.reminder.sparepart.index');
-    });
-    Route::get('/reminder-sparepart/create', function () {
-        return view('pages.admin.reminder.sparepart.create');
-    });
-    Route::get('/reminder-sparepart/edit', function () {
-        return view('pages.admin.reminder.sparepart.edit');
     });
 });

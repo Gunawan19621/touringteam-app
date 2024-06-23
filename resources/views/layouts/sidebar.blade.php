@@ -1,67 +1,8 @@
 <div class="left-side-menu">
-
     <div class="h-100" data-simplebar>
-
-        <!-- User box -->
-        {{-- <div class="user-box text-center">
-
-            <img src="{{ Auth::user()->profile_photo_path ? asset('storage/' . Auth::user()->profile_photo_path) : asset('assets/images/users/profile-default.png') }}"
-                alt="user-img" title="Mat Helme" class="rounded-circle img-thumbnail avatar-md">
-            <div class="dropdown">
-                <a href="#" class="user-name dropdown-toggle h5 mt-2 mb-1 d-block" data-bs-toggle="dropdown"
-                    aria-expanded="false">{{ Auth::user()->fullname }}</a>
-                <div class="dropdown-menu user-pro-dropdown">
-
-                    <!-- item-->
-                    <a href="{{ route('dashboard.profile.show') }}" class="dropdown-item notify-item">
-                        <i class="far fa-user me-1"></i>
-                        <span>My Account</span>
-                    </a>
-
-                    <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item notify-item">
-                        <i class="fas fa-cog me-1"></i>
-                        <span>Settings</span>
-                    </a>
-
-                    <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item notify-item">
-                        <i class="fas fa-lock me-1"></i>
-                        <span>Lock Screen</span>
-                    </a>
-
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                        @csrf
-                    </form>
-                    <a href="#" class="dropdown-item notify-item"
-                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                        <i class="fas fa-sign-out-alt me-1"></i>
-                        <span>Logout</span>
-                    </a>
-
-                </div>
-            </div>
-
-            <p class="text-muted left-user-info">Admin Head</p>
-
-            <ul class="list-inline">
-                <li class="list-inline-item">
-                    <a href="#" class="text-muted left-user-info">
-                        <i class="mdi mdi-cog"></i>
-                    </a>
-                </li>
-
-                <li class="list-inline-item">
-                    <a href="#">
-                        <i class="mdi mdi-power"></i>
-                    </a>
-                </li>
-            </ul>
-        </div> --}}
 
         <!--- Sidemenu -->
         <div id="sidebar-menu">
-
             <ul id="side-menu">
 
                 <li class="menu-title">Navigation</li>
@@ -87,10 +28,10 @@
                                 <a href="{{ url('/dashboard/community/create') }}">Tambah Komunnitas</a>
                             </li>
                             <li>
-                                <a href="#sidebarMultilevel4" data-bs-toggle="collapse">
+                                <a href="#sidebarCommunityData" data-bs-toggle="collapse">
                                     Data Komunitas <span class="menu-arrow"></span>
                                 </a>
-                                <div class="collapse" id="sidebarMultilevel4">
+                                <div class="collapse" id="sidebarCommunityData">
                                     <ul class="nav-second-level">
                                         <li>
                                             <a href="{{ url('/dashboard/community') }}">Komunitas 1</a>
@@ -104,23 +45,23 @@
 
                 <li>
                     <a href="#touring" data-bs-toggle="collapse">
-                        <i class="mdi mdi-account-group"></i>
-                        <span> Touring </span>
+                        <i class="mdi mdi-map-marker-path"></i>
+                        <span> Group Touring </span>
                         <span class="menu-arrow"></span>
                     </a>
                     <div class="collapse" id="touring">
                         <ul class="nav-second-level">
                             <li>
-                                <a href="{{ url('/dashboard/touring') }}">Aktif Touring</a>
+                                <a href="{{ route('dashboard.group-touring.index') }}">Aktif Touring</a>
                             </li>
                             <li>
-                                <a href="{{ url('/dashboard/touring/history') }}">History touring</a>
+                                <a href="#">History touring</a>
                             </li>
                         </ul>
                     </div>
                 </li>
 
-                <li>
+                {{-- <li>
                     <a href="#email" data-bs-toggle="collapse">
                         <i class="mdi mdi-account-group"></i>
                         <span> Member in group </span>
@@ -136,7 +77,7 @@
                             </li>
                         </ul>
                     </div>
-                </li>
+                </li> --}}
 
                 <li>
                     <a href="#reminder" data-bs-toggle="collapse">
@@ -150,7 +91,7 @@
                                 <a href="{{ route('dashboard.document.index') }}">Document Pengingat</a>
                             </li>
                             <li>
-                                <a href="{{ url('/dashboard/reminder-sparepart') }}">Sparepart Pengingat</a>
+                                <a href="{{ route('dashboard.sparepart.index') }}">Sparepart Pengingat</a>
                             </li>
                         </ul>
                     </div>
@@ -162,6 +103,7 @@
                         <span> Kendaraan </span>
                     </a>
                 </li>
+
                 <li>
                     <a href="{{ route('chat') }}">
                         <i class="mdi mdi-forum-outline"></i>

@@ -52,6 +52,5 @@
     @include('pages.admin.managemen-user.role.modal-role')
 
     @include('pages.admin.managemen-user.role.script-table')
-    {{-- --}}
 
 @endsection

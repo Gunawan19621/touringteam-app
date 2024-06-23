@@ -20,7 +20,7 @@ return new class extends Migration
             $table->integer('reminder'); //untuk mengingatkan 10 hari / lebih sebelumnya
             $table->enum('status_reminder', ['ignore', 'done'])->default('ignore'); // for ignore or done untuk pengingat ketika sudah di pilih done = iya atau sudah
             // $table->timestamp('reminder')->nullable();
-            $table->timestamp('last_service')->nullable(); // for last replace or service
+            $table->date('last_service')->nullable(); // for last replace or service
             $table->text('description')->nullable();
             $table->timestamps();
         });
