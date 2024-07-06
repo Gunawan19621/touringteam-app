@@ -19,6 +19,8 @@ class DatabaseSeeder extends Seeder
             M_RoleSeeder::class,
             T_WaypointsSeeder::class,
             M_TransportationsSeeder::class,
+            T_GroupSeeder::class,
+            GroupMemberSeeder::class,
         ]);
     }
 }

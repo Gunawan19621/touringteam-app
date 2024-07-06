@@ -5,22 +5,6 @@
     @include('layouts.head-meta-title')
     @include('layouts.head-link')
 
-    <!-- Style untuk loading screen menggunakan gif -->
-    {{-- <style>
-        .loading-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(255, 255, 255, 0.8);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-        }
-    </style> --}}
-
     <!-- Style untuk loading screen menggunakan 2 gambar -->
     <style>
         .loading-screen {
@@ -74,12 +58,6 @@
 
 <body class="loading" data-layout-color="light" data-layout-mode="default" data-layout-size="fluid" data-topbar-color="light"
     data-leftbar-position="fixed" data-leftbar-color="light" data-leftbar-size='default' data-sidebar-user='true'>
-
-    <!-- Loading Screen menggunakan gif-->
-    {{-- <div class="loading-screen" id="loading-screen">
-        <img src="{{ asset('assets/images/logo-load/location-load.gif') }}" alt="Loading..."
-            style="width: 125px; height: 125px;">
-    </div> --}}
 
     <!-- Loading Screen 2 gambar yang lingkaran di putar pakai css-->
     <div class="loading-screen" id="loading-screen">

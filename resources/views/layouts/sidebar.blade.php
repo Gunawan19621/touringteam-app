@@ -52,7 +52,7 @@
                     <div class="collapse" id="touring">
                         <ul class="nav-second-level">
                             <li>
-                                <a href="{{ route('dashboard.group-touring.index') }}">Aktif Touring</a>
+                                <a href="{{ route('dashboard.group-touring.index') }}">Group Touring</a>
                             </li>
                             <li>
                                 <a href="#">History touring</a>

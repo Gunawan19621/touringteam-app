@@ -43,8 +43,9 @@
                             <td>
                                 <button class="btn btn-success editGroup" data-id="{{ $group->id }}">Edit</button>
                                 <button class="btn btn-danger deleteGroup" data-id="{{ $group->id }}">Delete</button>
-                                {{-- <button class="btn btn-info showGroup" data-id="{{ $group->id }}">Show</button> --}}
-                                <a href="{{ route('dashboard.group-touring.show', $group->id) }}"
+                                {{-- <a href="{{ route('dashboard.group-touring.show', $group->id) }}"
+                                    class="btn btn-info">Show</a> --}}
+                                <a href="{{ route('dashboard.detail-group.show', $group->id) }}"
                                     class="btn btn-info">Show</a>
                             </td>
                         </tr>

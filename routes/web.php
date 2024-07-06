@@ -49,16 +49,18 @@ Route::prefix('dashboard')->name('dashboard.')->middleware(['auth'])->group(func
     });
 
     //Menu
-    //Halaman Komunitas
     //Halaman Group Touring
     Route::controller(App\Http\Controllers\T_GroupController::class)->group(function () {
         Route::get('group-touring', 'index')->name('group-touring.index');
-        // Route::get('group-touring/create', 'create')->name('group-touring.create');
         Route::post('group-touring/store', 'store')->name('group-touring.store');
-        Route::get('group-touring/{id}', 'show')->name('group-touring.show');
         Route::get('group-touring/{id}/edit', 'edit')->name('group-touring.edit');
         Route::put('group-touring/{id}', 'update')->name('group-touring.update');
         Route::delete('group-touring/delete/{id}', 'destroy')->name('group-touring.destroy');
+    });
+    //Halaman Detail Group Touring
+    Route::controller(App\Http\Controllers\DetailGroupController::class)->group(function () {
+        Route::get('group-touring/detail-group/{id}', 'show')->name('detail-group.show');
+        Route::put('group-touring/detail-group/{id}', 'update')->name('detail-group.update');
     });
 
     //Halaman Reminder Document

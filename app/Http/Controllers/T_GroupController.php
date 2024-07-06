@@ -58,11 +58,6 @@ class T_GroupController extends Controller
     /**
      * Display the specified resource.
      */
-    // public function show(string $id)
-    // {
-    //     $group = T_Group::find($id);
-    //     return response()->json($group);
-    // }
     public function show(string $id)
     {
         $group = T_Group::find($id);
