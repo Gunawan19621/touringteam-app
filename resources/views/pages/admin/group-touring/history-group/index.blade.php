@@ -1,19 +1,16 @@
 @extends('layouts.dashboard-master')
 
-@section('title', 'Group Touring')
+@section('title', 'Histori Group')
 
 @section('breadcrumb')
     @parent
-    <li class="breadcrumb-item active" aria-current="page">Group Touring</li>
+    <li class="breadcrumb-item active" aria-current="page">Histori Touring</li>
 @endsection
 
 @section('content')
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-            <span class="navbar-brand h1">List Group Touring</span>
-            <div class="d-flex">
-                <button id="createNewGroup" class="btn btn-success">Tambah Group</button>
-            </div>
+            <span class="navbar-brand h1">List Group Touring Yang sudah tidak aaktif</span>
         </div>
     </nav>
     <div class="card">
@@ -26,7 +23,7 @@
                         <th>Jarak</th>
                         <th>Notifikasi</th>
                         <th>Descripsi</th>
-                        <th>Action</th>
+                        <th>Status</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -40,22 +37,11 @@
                             <td>{{ $group->distance }}</td>
                             <td>{{ $group->send_notif }}</td>
                             <td>{{ $group->description }}</td>
-                            <td>
-                                <button class="btn btn-success editGroup" data-id="{{ $group->id }}">Edit</button>
-                                <button class="btn btn-danger deleteGroup" data-id="{{ $group->id }}">Delete</button>
-                                <a href="{{ route('dashboard.group-touring.show', $group->id) }}"
-                                    class="btn btn-info">Show</a>
-                            </td>
+                            <td>{{ $group->status }}</td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
     </div>
-
-    <!-- Modal -->
-    @include('pages.admin.group-touring.modal-group')
-
-    <!-- Script -->
-    @include('pages.admin.group-touring.script-table')
 @endsection

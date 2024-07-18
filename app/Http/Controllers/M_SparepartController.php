@@ -13,8 +13,11 @@ class M_SparepartController extends Controller
      */
     public function index()
     {
-        $sparepart = M_Sparepart::all();
-        return view('pages.admin.reminder.sparepart.index', compact('sparepart'));
+        $data = [
+            'sparepart' => M_Sparepart::all(),
+            'active' => 'sparepart',
+        ];
+        return view('pages.admin.reminder.sparepart.index', $data);
     }
 
     /**

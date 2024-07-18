@@ -14,8 +14,13 @@ class M_TransportationController extends Controller
      */
     public function index()
     {
-        $transportation = M_Transportation::all();
-        return view('pages.admin.transportation.index', compact('transportation'));
+        $data = [
+            'transportation' => M_Transportation::all(),
+            'active' => 'transportation',
+
+        ];
+        // $transportation = M_Transportation::all();
+        return view('pages.admin.transportation.index', $data);
     }
 
     /**

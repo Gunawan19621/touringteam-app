@@ -13,8 +13,11 @@ class M_UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
-        return view('pages.admin.managemen-user.m-user.index', compact('users'));
+        $data = [
+            'users' => User::all(),
+            'active' => 'm-user',
+        ];
+        return view('pages.admin.managemen-user.m-user.index', $data);
     }
 
     /**

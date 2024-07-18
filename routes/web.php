@@ -24,10 +24,7 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('pages.admin.index');
-        // return view('dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
 
     //sampe bawah di sini tidak di pakai
     Route::get('/member-group', function () {
@@ -56,12 +53,33 @@ Route::prefix('dashboard')->name('dashboard.')->middleware(['auth'])->group(func
         Route::get('group-touring/{id}/edit', 'edit')->name('group-touring.edit');
         Route::put('group-touring/{id}', 'update')->name('group-touring.update');
         Route::delete('group-touring/delete/{id}', 'destroy')->name('group-touring.destroy');
+        //Untuk detail touring
+        Route::get('group-touring/{id}', 'show')->name('group-touring.show');
+        Route::get('/group/{id}/anggota', 'anggota')->name('group.anggota');
+        Route::get('/group/{id}/area', 'area')->name('group.area');
+        Route::post('group-touring/detail-group/storeArea', 'storeArea')->name('group.storeArea');
+        Route::get('/group/{id}/pengaturan', 'pengaturan')->name('group.pengaturan');
     });
+
     //Halaman Detail Group Touring
     Route::controller(App\Http\Controllers\DetailGroupController::class)->group(function () {
-        Route::get('group-touring/detail-group/{id}', 'show')->name('detail-group.show');
-        Route::put('group-touring/detail-group/{id}', 'update')->name('detail-group.update');
+        Route::put('group-touring/detail-group/{id}', 'updateDetailGroup')->name('detail-group.updateDetailGroup');
+        Route::put('group-touring/detail-group/update/{id}', 'update')->name('detail-group.update');
+        Route::delete('group-touring/detail-group/delete/{id}', 'destroy')->name('detail-group.destroy');
     });
+
+    //Halaman History Group Touring
+
+    Route::controller(App\Http\Controllers\HistoryGroupController::class)->group(function () {
+        Route::get('history-group-touring', 'index')->name('history-group-touring.index');
+        // Route::get('history-group-touring/create', 'create')->name('history-group-touring.create');
+        // Route::post('history-group-touring/store', 'store')->name('history-group-touring.store');
+        // Route::get('history-group-touring/{id}', 'show')->name('history-group-touring.show');
+        // Route::get('history-group-touring/{id}/edit', 'edit')->name('history-group-touring.edit');
+        // Route::put('history-group-touring/{id}', 'update')->name('history-group-touring.update');
+        // Route::delete('history-group-touring/delete/{id}', 'destroy')->name('history-group-touring.destroy');
+    });
+
 
     //Halaman Reminder Document
     Route::controller(App\Http\Controllers\M_DocumentController::class)->group(function () {
@@ -112,18 +130,5 @@ Route::prefix('dashboard')->name('dashboard.')->middleware(['auth'])->group(func
         Route::get('role/{id}/edit', 'edit')->name('role.edit');
         Route::put('role/{id}', 'update')->name('role.update');
         Route::delete('role/delete/{id}', 'destroy')->name('role.destroy');
-    });
-
-    //
-    //
-    //
-    //
-    //
-    //halaman Komunitas
-    Route::get('/community', function () {
-        return view('pages.admin.community.index');
-    });
-    Route::get('/community/create', function () {
-        return view('pages.admin.community.create');
     });
 });

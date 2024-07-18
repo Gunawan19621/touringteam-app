@@ -48,5 +48,5 @@
 <!-- Datatables init -->
 <script src="{{ asset('assets/js/pages/datatables.init.js') }}"></script>
 
-<!-- App js-->
+<!-- App js untuk sidebar ada di sini-->
 <script src="{{ asset('assets/js/app.min.js') }}"></script>

@@ -14,8 +14,11 @@ class M_RoleController extends Controller
      */
     public function index()
     {
-        $roles = M_Role::all();
-        return view('pages.admin.managemen-user.role.index', compact('roles'));
+        $data = [
+            'roles' => M_Role::all(),
+            'active' => 'm-role',
+        ];
+        return view('pages.admin.managemen-user.role.index', $data);
     }
 
     /**

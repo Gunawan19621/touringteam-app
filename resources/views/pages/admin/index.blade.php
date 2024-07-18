@@ -25,7 +25,7 @@
                         </div>
                     </div>
 
-                    <h4 class="header-title mt-0 mb-4">Total Revenue</h4>
+                    <h4 class="header-title mt-0 mb-4">Total Group Touring</h4>
 
                     <div class="widget-chart-1">
                         <div class="widget-chart-box-1 float-start" dir="ltr">
@@ -63,7 +63,7 @@
                         </div>
                     </div>
 
-                    <h4 class="header-title mt-0 mb-3">Sales Analytics</h4>
+                    <h4 class="header-title mt-0 mb-3">Total Kendaraan</h4>
 
                     <div class="widget-box-2">
                         <div class="widget-detail-2 text-end">
@@ -103,7 +103,7 @@
                         </div>
                     </div>
 
-                    <h4 class="header-title mt-0 mb-4">Statistics</h4>
+                    <h4 class="header-title mt-0 mb-4">Total Dokumen</h4>
 
                     <div class="widget-chart-1">
                         <div class="widget-chart-box-1 float-start" dir="ltr">
@@ -140,7 +140,7 @@
                         </div>
                     </div>
 
-                    <h4 class="header-title mt-0 mb-3">Daily Sales</h4>
+                    <h4 class="header-title mt-0 mb-3">Total Sparepart</h4>
 
                     <div class="widget-box-2">
                         <div class="widget-detail-2 text-end">
@@ -321,7 +321,8 @@
                 <div class="card-body widget-user">
                     <div class="d-flex align-items-center">
                         <div class="flex-shrink-0 avatar-lg me-3">
-                            <img src="/images/users/user-10.jpg" class="img-fluid rounded-circle" alt="user">
+                            <img src="{{ asset('assets/images/users/user-10.jpg') }}" class="img-fluid rounded-circle"
+                                alt="user">
                         </div>
                         <div class="flex-grow-1 overflow-hidden">
                             <h5 class="mt-0 mb-1">Tomaslau</h5>

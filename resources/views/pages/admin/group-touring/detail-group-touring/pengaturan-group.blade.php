@@ -1,105 +1,100 @@
-<div class="card">
-    <div class="card-body">
-        <h4 class="header-title">Pengaturan Group</h4>
-        <div class="mb-2" id="pengaturan1">
-            <div class="row">
-                <div class="col-4">
-                    <label class="form-label">Pengaturan 1</label>
-                </div>
-                <div class="col-8">
-                    <div class="form-check form-check-success">
-                        <input type="radio" name="radio" id="radio1" value="success" class="form-check-input"
-                            checked>
-                        <label for="radio1" class="form-label">
-                            Success
-                        </label>
-                    </div>
-                    <div class="form-check form-check-info">
-                        <input type="radio" name="radio" id="radio2" value="info" class="form-check-input">
-                        <label for="radio2" class="form-label">
-                            Info
-                        </label>
-                    </div>
-                    <div class="form-check form-check-warning">
-                        <input type="radio" name="radio" id="radio3" value="warning" class="form-check-input">
-                        <label for="radio3" class="form-label">
-                            Warning
-                        </label>
-                    </div>
-                    <div class="form-check form-check-danger">
-                        <input type="radio" name="radio" id="radio4" value="error" class="form-check-input">
-                        <label for="radio4" class="form-label">
-                            Error
-                        </label>
-                    </div>
-                </div>
-            </div>
-        </div>
+@extends('layouts.dashboard-master')
 
-        <div class="mb-2">
-            <div class="row">
-                <div class="col-4">
-                    <label class="form-label">Pengaturan 2</label>
-                </div>
-                <div class="col-8">
-                    <div class="form-check">
-                        <input id="checkbox1" type="checkbox" value="checked" class="form-check-input" />
-                        <label for="checkbox1" class="form-label">
-                            checkbox1
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input id="checkbox2" type="checkbox" value="checked" class="form-check-input" />
-                        <label for="checkbox2" class="form-label">
-                            checkbox2
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input id="checkbox3" type="checkbox" value="checked" class="form-check-input" />
-                        <label for="checkbox3" class="form-label">
-                            checkbox3
-                        </label>
-                    </div>
-                </div>
-            </div>
-        </div>
+@section('title', 'Detail Group Touring')
 
-        <div class="mb-2">
-            <div class="row">
-                <div class="col-4">
-                    <label for="form-label">Pengaturan 3</label>
-                    <i class="mdi mdi-alert-circle-outline" data-bs-toggle="tooltip" data-bs-placement="top"
-                        title="Ini adalah sampel jika di kasih tooltip!"></i>
-                </div>
-                <div class="col-4">
-                    <div class="form-check form-switch">
-                        <input type="checkbox" class="form-check-input" id="customSwitch1">
-                        <label class="form-check-label" for="customSwitch1">Toggle this switch
-                            element</label>
-                    </div>
-                </div>
-            </div>
-        </div>
+@section('breadcrumb')
+    @parent
+    <li class="breadcrumb-item"><a href="{{ route('dashboard.group-touring.index') }}">Group Touring</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Detail Group</li>
+@endsection
 
-        <div class="mb-2">
-            <div class="row">
-                <div class="col-4">
-                    <label for="example-select" class="form-label">Input Select</label>
-                </div>
-                <div class="col-8">
-                    <select class="form-select" id="example-select">
-                        <option disabled selected>Pilih salah satu</option>
-                        <option>satu</option>
-                        <option>dua</option>
-                        <option>tiga</option>
-                    </select>
+@section('content')
+    <div class="card">
+        <div class="bg-picture card-body">
+            <div class="d-flex align-items-top">
+
+                <!-- avatar -->
+                <img src="{{ asset('assets/images/users/profile.jpg') }}"
+                    class="flex-shrink-0 rounded-circle avatar-xl img-thumbnail float-start me-3" alt="profile-image"
+                    style="width: 150px; height: 150px;">
+
+                <!-- profile detail -->
+                <div class="flex-grow-1 overflow-hidden">
+                    <h4 class="m-0">{{ $group->name }}</h4>
+                    <p class="font-13 mt-2">{{ $group->description }}</p>
+                    <!-- social  -->
+                    <ul class="social-list list-inline mt-3 mb-0">
+                        <li class="list-inline-item">
+                            <i class="mdi mdi-18px mdi-account"></i>
+                            <p class="d-inline-block">100</p>
+                        </li>
+                        <li class="list-inline-item">
+                            <i class="mdi mdi-phone"></i>
+                            <p class="d-inline-block">085159079010</p>
+                        </li>
+                    </ul>
                 </div>
             </div>
-        </div>
-        <div class="text-center">
-            <button type="button" class="btn btn-primary waves-effect waves-light mb-1 me-1">Show
-                Toast</button>
-            <button type="button" class="btn btn-danger waves-effect waves-light mb-1 me-1">Reset</button>
         </div>
     </div>
-</div>
+
+    <div class="card">
+        <div class="card-body">
+            <h4 class="header-title mb-4">{{ $group->name }}</h4>
+
+            <ul class="nav nav-pills navtab-bg nav-justified">
+                <li class="nav-item">
+                    <a href="{{ route('dashboard.group-touring.show', $group->id) }}" class="nav-link">
+                        Detail Group
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('dashboard.group.anggota', $group->id) }}" class="nav-link ">
+                        Anggota
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('dashboard.group.area', $group->id) }}" class="nav-link ">
+                        Area
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('dashboard.group.pengaturan', $group->id) }}" class="nav-link active">
+                        Pengaturan
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <h4 class="header-title mb-3">Pengaturan Group</h4>
+                <div class="mb-2">
+                    <div class="row">
+                        <div class="col-6">
+                            <label for="example-select" class="form-label">Status Group</label>
+                            <select class="form-select" id="example-select">
+                                <option disabled selected>Pilih salah satu</option>
+                                <option>Publik</option>
+                                <option>Private</option>
+                            </select>
+                        </div>
+                        <div class="col-6">
+                            <label for="example-select" class="form-label">Notifikasi</label>
+                            <select class="form-select" id="example-select">
+                                <option disabled selected>Pilih salah satu</option>
+                                <option>Admin</option>
+                                <option>Anggota</option>
+                                <option>Semua</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                    <button type="button" class="btn btn-danger">Kembali</button>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection

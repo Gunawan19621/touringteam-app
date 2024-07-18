@@ -10,73 +10,34 @@ use Illuminate\Support\Facades\Validator;
 
 class DetailGroupController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index($id)
+    //Update Detail Group
+    public function updateDetailGroup(Request $request, string $id)
     {
-        // Ambil data group
-        $group = T_Group::find($id);
+        $validasi = Validator::make(
+            $request->all(),
+            [
+                'name' => 'required',
+                'description' => '',
+            ],
+            [
+                'name.required' => 'Nama harus diisi',
+            ]
+        );
 
-        // Ambil data group members
-        $group_members = GroupMember::where('group_id', $id)->get();
+        if ($validasi->fails()) {
+            return response()->json(['errors' => $validasi->errors()]);
+        } else {
+            $data = [
+                'name' => $request->name,
+                'description' => $request->description,
+            ];
 
-        // Ambil data user berdasarkan user_id dari group_members
-        $group_members->each(function ($member) {
-            $member->user = User::find($member->user_id);
-        });
-
-        $data = [
-            'group' => $group,
-            'group_members' => $group_members,
-        ];
-        return view('pages.admin.group-touring.detail-group-touring.index', $data);
+            T_Group::findOrFail($id)->update($data);
+            return response()->json(['success' => "Data berhasil di Update"]);
+        }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        $group = T_Group::find($id);
-
-        // Ambil data group members
-        $group_members = GroupMember::where('group_id', $id)->get();
-
-        // Ambil data user berdasarkan user_id dari group_members
-        $group_members->each(function ($member) {
-            $member->user = User::find($member->user_id);
-        });
-        return view('pages.admin.group-touring.detail-group-touring.index', compact('group', 'group_members'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
+    // update status anggota grup
     public function update(Request $request, string $id)
     {
         // Validasi input
@@ -103,13 +64,5 @@ class DetailGroupController extends Controller
         $groupMember->save();
 
         return response()->json(['success' => 'Status berhasil diperbarui.']);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
     }
 }

@@ -13,8 +13,11 @@ class M_DocumentController extends Controller
      */
     public function index()
     {
-        $documents = M_Document::all();
-        return view('pages.admin.reminder.document.index', compact('documents'));
+        $data = [
+            'documents' => M_Document::all(),
+            'active' => 'documents',
+        ];
+        return view('pages.admin.reminder.document.index', $data);
     }
 
     /**
